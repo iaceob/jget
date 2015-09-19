@@ -25,6 +25,12 @@ primary key (job)
 );
 
 
+create view v_job_stat as
+select js2.job, js1.stat, js2.ctime from j_job_stat as js1
+right join (
+select job, max(ctime) as ctime from j_job_stat group by job
+) as js2 on js1.job=js2.job and js1.ctime=js2.ctime
+
 
 
 

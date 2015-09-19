@@ -14,6 +14,7 @@
     <modules>
         <module>jget-download</module>
         <module>jget-web</module>
+        <module>jget-common</module>
     </modules>
 
     <properties>

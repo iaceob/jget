@@ -24,7 +24,6 @@ public class Jget {
 
     public Boolean initConf() {
         try {
-
             DruidPlugin dp = new DruidPlugin(
                 this.conf.get("db.psql.url"),
                 this.conf.get("db.psql.username"),
@@ -60,9 +59,28 @@ public class Jget {
     }
 
 
+    public Boolean start() {
+        try {
+            this.startJobThread();
+            return true;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return false;
+        }
+    }
+
 
     public static void main(String[] args) {
-
+        Jget jget = new Jget();
+        if (!jget.initConf()) {
+            log.error("开启配置信息失败");
+            return;
+        }
+        if (!jget.start()) {
+            log.error("下载服务开启失败");
+            return;
+        }
+        log.info("下载服务开启成功");
     }
 
 }
