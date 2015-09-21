@@ -5,7 +5,7 @@
     <parent>
         <artifactId>jget</artifactId>
         <groupId>name.iaceob</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0-alpha</version>
     </parent>
     <packaging>war</packaging>
     <modelVersion>4.0.0</modelVersion>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>name.iaceob</groupId>
             <artifactId>jget-common</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.jfinal</groupId>
@@ -34,4 +34,22 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <warName>${project.artifactId}-${project.parent.version}</warName>
+                    <packagingExcludes>
+                        WEB-INF/lib/jetty*.jar,
+                        WEB-INF/lib/javax.servlet*.jar,
+                        WEB-INF/lib/antlr4-*.jar,
+                        WEB-INF/lib/commons-lang3*.jar,
+                        WEB-INF/lib/org.abego.treelayout*.jar
+                    </packagingExcludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

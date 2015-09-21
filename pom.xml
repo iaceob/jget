@@ -6,10 +6,10 @@
 
     <groupId>name.iaceob</groupId>
     <artifactId>jget</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-alpha</version>
     <packaging>pom</packaging>
     <name>jget project</name>
-
+    <description>Jget 网络文件下载服务</description>
 
     <modules>
         <module>jget-download</module>
@@ -19,6 +19,9 @@
     </modules>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <pro-basedir>${project.basedir}</pro-basedir>
+        <version-java>1.8</version-java>
         <version-logback>1.1.2</version-logback>
         <vension-slf4j>1.7.12</vension-slf4j>
         <version-junit>4.12</version-junit>
@@ -26,7 +29,6 @@
         <version-druid>1.0.5</version-druid>
         <version-pgsql>9.1-901-1.jdbc4</version-pgsql>
     </properties>
-
 
     <dependencies>
         <dependency>
@@ -77,13 +79,12 @@
             <artifactId>postgresql</artifactId>
             <version>${version-pgsql}</version>
         </dependency>
-
     </dependencies>
 
     <repositories>
         <repository>
-            <id>oschinarepository</id>
-            <name>oschinarepository</name>
+            <id>oschina-repository</id>
+            <name>oschina-repository</name>
             <url>http://maven.oschina.net/content/groups/public/</url>
             <layout>default</layout>
             <releases>
@@ -94,5 +95,46 @@
             </snapshots>
         </repository>
     </repositories>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.4.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.2</version>
+                    <configuration>
+                        <source>${version-java}</source>
+                        <target>${version-java}</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.18</version>
+                    <configuration>
+                        <skip>true</skip>
+                        <testFailureIgnore>true</testFailureIgnore>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>

@@ -1,6 +1,6 @@
 package name.iaceob.jget.test.serv;
 
-import name.iaceob.jget.kit.disgest.Disgest;
+import name.iaceob.jget.download.kit.disgest.Disgest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
