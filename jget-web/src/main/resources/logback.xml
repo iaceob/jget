@@ -151,10 +151,6 @@
     </appender>
 
     <logger name="org.eclipse.jetty" level="WARN" />
-    <logger name="httpclient.wire" level="WARN" />
-    <logger name="org.apache.commons.httpclient" level="WARN" />
-    <logger name="org.springframework.jdbc" level="WARN" />
-    <logger name="com.zxsoft.crawler.s" level="DEBUG" />
 
 
 
