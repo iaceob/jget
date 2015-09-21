@@ -11,12 +11,20 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jget-download</artifactId>
 
+    <properties>
+        <version-wget>1.2.12</version-wget>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>name.iaceob</groupId>
             <artifactId>jget-common</artifactId>
             <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.axet</groupId>
+            <artifactId>wget</artifactId>
+            <version>${version-wget}</version>
         </dependency>
     </dependencies>
 
