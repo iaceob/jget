@@ -57,7 +57,7 @@ public class MultithreadDownload {
                         String parts = "";
 
                         for (DownloadInfo.Part p : info.getParts()) {
-                            if (!p.getState().equals(DownloadInfo.Part.States.DOWNLOADING)) break;
+                            if (!p.getState().equals(DownloadInfo.Part.States.DOWNLOADING)) continue;
                             parts += String.format("Part#%d(%.2f) ", p.getNumber(), p.getCount() / (float) p.getLength());
                         }
                         log.info(String.format("%.2f %s", info.getCount() / (float) info.getLength(), parts));

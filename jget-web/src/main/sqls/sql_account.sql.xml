@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<slxlme>
+    <container name="Account">
+        <sql id="saveAccount">
+            insert into j_account (id, name, email, passwd) values (?,?,?, ?)
+        </sql>
+        <sql id="getAccountByName">
+            select id, name, email, passwd, stat from j_account where name=?
+        </sql>
+        <sql id="getAccountById">
+            select id, name, email, passwd, stat from j_account where id=?
+        </sql>
+        <sql id="disabledAccount">
+            update j_account set stat=? where id=?
+        </sql>
+    </container>
+</slxlme>

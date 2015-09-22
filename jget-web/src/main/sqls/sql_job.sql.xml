@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<slxlme>
+    <container name="Job">
+        <sql id="test">
+            select * from t_test;
+        </sql>
+    </container>
+</slxlme>
