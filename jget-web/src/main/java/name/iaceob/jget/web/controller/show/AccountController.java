@@ -1,4 +1,4 @@
-package name.iaceob.jget.web.controller;
+package name.iaceob.jget.web.controller.show;
 
 import com.jfinal.core.Controller;
 

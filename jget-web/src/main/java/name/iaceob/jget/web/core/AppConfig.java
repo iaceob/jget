@@ -13,10 +13,10 @@ import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.druid.DruidStatViewHandler;
 import com.jfinal.render.ViewType;
 import name.iaceob.jget.web.common.Const;
-import name.iaceob.jget.web.controller.AccountController;
-import name.iaceob.jget.web.controller.CliController;
-import name.iaceob.jget.web.controller.IndexController;
-import name.iaceob.jget.web.controller.JobController;
+import name.iaceob.jget.web.controller.show.AccountController;
+import name.iaceob.jget.web.controller.show.CliController;
+import name.iaceob.jget.web.controller.show.IndexController;
+import name.iaceob.jget.web.controller.show.JobController;
 import name.iaceob.jget.web.factory.BeetlFactory;
 import name.iaceob.jget.web.handler.BasePathHandler;
 import name.iaceob.jget.web.handler.ParamsHandler;
@@ -93,13 +93,13 @@ public class AppConfig extends JFinalConfig {
     @Override
     public void afterJFinalStart() {
         log.info("在端口: " + this.pro.getInt("pro.dev.port") + " 成功开启 " + this.pro.get("pro.name") +
-                " " + this.pro.get("pro.version", ""));
+                " " + this.pro.get("pro.version"));
     }
 
 
     public static void main(String[] args) {
         AppConfig app = new AppConfig();
-        JFinal.start(app.pro.get("pro.dev.webappPath"), app.pro.getInt("pro.dev.port"),
+        JFinal.start(PathKit.getWebRootPath() + app.pro.get("pro.dev.webappPath"), app.pro.getInt("pro.dev.port"),
                 app.pro.get("pro.dev.context"), app.pro.getInt("pro.dev.interval"));
     }
 

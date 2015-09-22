@@ -1,6 +1,6 @@
 package org.beetl.ext.tag;
 
-import name.iaceob.jget.web.util.HtmlCompressor;
+import name.iaceob.jget.web.kit.html.HtmlCompressor;
 import org.beetl.core.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

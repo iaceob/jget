@@ -1,4 +1,4 @@
-package name.iaceob.jget.web.controller;
+package name.iaceob.jget.web.controller.show;
 
 import com.jfinal.core.Controller;
 
@@ -7,5 +7,9 @@ import com.jfinal.core.Controller;
  */
 public class IndexController extends Controller {
 
+
+    public void index() {
+        super.render("/index/index.html");
+    }
 
 }

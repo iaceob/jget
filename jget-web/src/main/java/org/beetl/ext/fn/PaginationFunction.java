@@ -1,7 +1,7 @@
 package org.beetl.ext.fn;
 
 import com.jfinal.kit.StrKit;
-import com.zxsoft.crawler.w.util.Tool;
+import name.iaceob.jget.web.kit.Tool;
 import org.beetl.core.Context;
 import org.beetl.core.Function;
 

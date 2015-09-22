@@ -22,7 +22,7 @@ create table j_job(
 id varchar(30) not null,
 name varchar(100) not null,
 suffix varchar(10) not null,
-sz int not null,
+sz decimal not null,
 path varchar(30) not null,
 url varchar(255) not nul,
 type int not null,
@@ -40,7 +40,7 @@ comment on column j_job.type is '任务类型|HTTP|TORRENT|MAGNETIC';
 
 create table j_job_stat(
 job varchar(30) not null,
-stat int not null,
+stat varchar(20) not null,
 ctime timestamp default now(),
 primary key(job, ctime)
 );
@@ -59,6 +59,7 @@ comment on table j_job_progress is '任务进度';
 comment on column j_job_progress.job is '任务';
 comment on column j_job_progress.progress is '进度';
 
+
 create table j_job_cli(
 job varchar(30) not null,
 cli varchar(30) not null,
@@ -69,6 +70,7 @@ comment on table j_local is '任务执行机';
 comment on column j_local.job is '任务';
 comment on column j_local.cli is '客户机';
 
+
 create table j_cli(
 id varchar(30) not null,
 name varchar(50) not null,
@@ -77,11 +79,13 @@ heartbeat timestamp,
 ctime timestamp default now(),
 primary key(id)
 );
+create index ix_cli_name on j_cli(name);
 comment on table j_cli is '任务执行机';
 comment on column j_cli.id is '客户机id';
 comment on column j_cli.name is '客户机名';
 comment on column j_cli.ip is '客户机ip';
 comment on column j_cli.heartbeat is '心跳时间';
+
 
 create table j_cli_account(
 account varchar(30) not null,
@@ -102,8 +106,16 @@ select job, max(ctime) as ctime from j_job_stat group by job
 ) as js2 on js1.job=js2.job and js1.ctime=js2.ctime;
 
 
-
-
+/*
+drop table j_account;
+drop table j_job;
+drop table j_job_stat;
+drop table j_job_progress;
+drop table j_job_cli;
+drop table j_cli;
+drop table j_cli_account;
+drop view v_job_stat;
+*/
 
 
 
