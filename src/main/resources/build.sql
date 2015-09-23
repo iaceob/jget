@@ -24,10 +24,12 @@ create table j_job(
 id varchar(30) not null,
 name varchar(100) not null,
 suffix varchar(10) not null,
-sz decimal not null,
+sz int not null,
 path varchar(30) not null,
-url varchar(255) not null,
+url varchar(2000) not null,
 type int not null,
+cookie varchar(2000),
+usr varchar(30) not null,
 ctime timestamp default now(),
 primary key(id)
 );
@@ -38,6 +40,8 @@ comment on column j_job.sz is '文件尺寸';
 comment on column j_job.path is '文件下载路径';
 comment on column j_job.url is '下载地址';
 comment on column j_job.type is '任务类型|HTTP|TORRENT|MAGNETIC';
+comment on column j_job.cookie is 'cookie 内容';
+comment on column j_job.usr is '任务创建人';
 
 
 create table j_job_stat(
@@ -78,27 +82,30 @@ id varchar(30) not null,
 name varchar(50) not null,
 ip varchar(50) not null,
 heartbeat timestamp,
+usr varchar(30) not null,
 ctime timestamp default now(),
 primary key(id)
 );
-create index ix_cli_name on j_cli(name);
+create unique index uq_cli_name_usr on j_cli(name, usr);
 comment on table j_cli is '任务执行机';
 comment on column j_cli.id is '客户机id';
 comment on column j_cli.name is '客户机名';
 comment on column j_cli.ip is '客户机ip';
 comment on column j_cli.heartbeat is '心跳时间';
+comment on column j_cli.usr is '客户机所属人';
 
 
-create table j_cli_account(
-account varchar(30) not null,
+create table j_cli_black(
 cli varchar(30) not null,
+target varchar(50) not null,
+type varchar(10) not null,
 ctime timestamp default now(),
-primary key(account, cli)
+primary key(cli, type)
 );
-comment on table j_cli_account is '客户机所属人';
-comment on column j_cli_account.account is '帐户id';
-comment on column j_cli_account.cli is '客户机id';
-
+comment on table j_cli_black is '客户机黑名单';
+comment on column j_cli_black.cli is '客户机id';
+comment on column j_cli_black.target is '客户机名称或者ip';
+comment on column j_cli_black.type is '名称或者ip标识';
 
 
 create view v_job_stat as

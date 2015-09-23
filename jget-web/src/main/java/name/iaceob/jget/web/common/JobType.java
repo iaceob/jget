@@ -5,6 +5,7 @@ package name.iaceob.jget.web.common;
  */
 public enum JobType {
 
+    UNDEFINED(0),
     TCP(1),
     TORRENT(2),
     MAGNETIC(3);
@@ -14,6 +15,9 @@ public enum JobType {
     }
     public Integer getIndex() {
         return this.index;
+    }
+    public static JobType getJobType(Integer index) {
+        return JobType.values()[index];
     }
 
 }

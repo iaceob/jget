@@ -11,6 +11,7 @@ public enum JobStat {
     STOP,
     ERROR,
     DONE,
+    WAIT,
     UNDEFINED;
 
     public static JobStat getJobStat(String stat) {
@@ -18,6 +19,6 @@ public enum JobStat {
         for (JobStat js : j)
             if (js.toString().equals(stat))
                 return js;
-        return UNDEFINED;
+        return WAIT;
     }
 }

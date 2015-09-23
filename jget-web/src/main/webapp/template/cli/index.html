@@ -1,0 +1,52 @@
+<!--@var title={-->下载终端<!--@};-->
+
+<!--@var header={-->
+
+<!--@};-->
+
+<!--@var footer={-->
+<script>
+    $(document).ready(function () {
+       'use strict';
+
+        $('#registercliform').bind('submit', function () {
+            $.ajax({
+                url: basePath + "/post/cli/register",
+                type: 'post',
+                data: $(this).serialize(),
+                dataType: 'json'
+            }).done(function(data){
+                console.log(data);
+            });
+            return false;
+        });
+
+    });
+</script>
+<!--@};-->
+
+<!--@var container={-->
+<div>
+    <p><a href="${basePath}/">home</a>
+</div>
+<div>
+    <form id="registercliform" autocomplete="off">
+        <div>
+            <label for="name">name</label>
+            <input type="text" id="name" name="name"/>
+            <span>此项非常重要, 这个名称必须和下载终端中的 name 相同, 如果下载终端中没有配置 name 则默认提取下载终端的机器名称</span>
+        </div>
+        <div>
+            <label for="ip">ip</label>
+            <input type="text" id="ip" name="ip" value="0.0.0.0" readonly />
+            <span>此项可不用更改, ip 会在下载机的心跳中进行更新</span>
+        </div>
+        <div>
+            <button>Create</button>
+        </div>
+    </form>
+</div>
+<div id="box_res"></div>
+<!--@};-->
+
+<!--@include("/layout/layout_default.html", {title: title, header: header, container: container, footer: footer}){}-->

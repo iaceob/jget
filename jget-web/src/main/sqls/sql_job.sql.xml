@@ -2,7 +2,7 @@
 <slxlme>
     <container name="Job">
         <sql id="createJob">
-            insert into j_job(id, name, suffix, sz, path, url, type) values (?,?,?,?,?,?,?);
+            insert into j_job(id, name, suffix, sz, path, url, type, usr, cookie) values (?,?,?,?,?,?,?,?,?);
         </sql>
         <sql id="saveStat">
             insert into j_job_stat(job, stat) values (?,?)

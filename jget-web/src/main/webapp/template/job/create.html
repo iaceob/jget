@@ -1,0 +1,75 @@
+<!--@var title={-->任务中心<!--@};-->
+
+<!--@var header={-->
+
+<!--@};-->
+
+<!--@var footer={-->
+<script>
+    $(document).ready(function () {
+        'use strict';
+
+        $('#newjobform').bind('submit', function(){
+            $.ajax({
+                url: basePath + '/post/job/create',
+                type: 'post',
+                data: $(this).serialize(),
+                dataType: 'json'
+            }).done(function (data) {
+                console.log(data);
+            });
+            return false;
+        });
+
+    });
+</script>
+<!--@};-->
+
+<!--@var container={-->
+<div>
+    <p><a href="${basePath}/">home</a>
+</div>
+<div>
+    <form id="newjobform" autocomplete="off">
+        <div>
+            <label for="url">url</label>
+            <input type="text" id="url" name="url"/>
+        </div>
+        <div>
+            <label for="name">name</label>
+            <input type="text" id="name" name="name"/>
+        </div>
+        <div>
+            <label for="suffix">suffix</label>
+            <input type="text" id="suffix" name="suffix"/>
+        </div>
+        <div>
+            <label for="path">path</label>
+            <input type="text" id="path" name="path" value="download"/>
+        </div>
+        <div>
+            <label for="cli">cli</label>
+            <select name="cli" id="cli">
+                <option value="">Please selector
+                <!--@
+                for(var i=0; i<clis.~size; i++) {
+                -->
+                <option value="${clis[i].id}">${clis[i].name} -- ${clis[i].ip}
+                <!--@
+                }
+                -->
+            </select>
+        </div>
+        <div>
+            <label for="cookie">cookie</label>
+            <textarea name="cookie" id="cookie"></textarea>
+        </div>
+        <div>
+            <button>Create</button>
+        </div>
+        <input type="hidden" name="type" value="1"/>
+    </form>
+</div>
+<!--@};-->
+
+<!--@include("/layout/layout_default.html", {title: title, header: header, container: container, footer: footer}){}-->

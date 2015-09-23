@@ -13,6 +13,8 @@ import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.druid.DruidStatViewHandler;
 import com.jfinal.render.ViewType;
 import name.iaceob.jget.web.common.Const;
+import name.iaceob.jget.web.controller.post.CliPostController;
+import name.iaceob.jget.web.controller.post.JobPostController;
 import name.iaceob.jget.web.controller.show.AccountController;
 import name.iaceob.jget.web.controller.show.CliController;
 import name.iaceob.jget.web.controller.show.IndexController;
@@ -58,6 +60,9 @@ public class AppConfig extends JFinalConfig {
         routes.add("/account", AccountController.class);
         routes.add("/cli", CliController.class);
         routes.add("/job", JobController.class);
+
+        routes.add("/post/cli", CliPostController.class);
+        routes.add("/post/job", JobPostController.class);
     }
 
     @Override

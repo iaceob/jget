@@ -2,13 +2,21 @@
 <slxlme>
     <container name="Cli">
         <sql id="registerCli">
-            insert into j_cli(id, name, ip, heartbeat) values (?,?,?,now())
+            insert into j_cli(id, name, ip, heartbeat, usr) values (?,?,?,now(),?)
         </sql>
         <sql id="existCli">
-            select id from j_cli where name=?
+            select id from j_cli where name=? and usr=?
         </sql>
         <sql id="heartbeatCli">
             update j_cli set heartbeat=now() where id=?
+        </sql>
+        <sql id="getClis">
+            select id, name, ip, heartbeat, ctime from j_cli where usr=?
+        </sql>
+        <sql id="getUsableClis">
+            <![CDATA[
+            select id, name, ip, heartbeat, ctime from j_cli where usr=? and extract(epoch from (now()-heartbeat))<?
+            ]]>
         </sql>
     </container>
 </slxlme>
