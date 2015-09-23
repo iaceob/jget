@@ -21,8 +21,8 @@ public class RegisterCliValidator extends Validator {
             controller.renderJson(Tool.pushResult(-1, controller.getAttrForStr("null_ip")));
             return;
         }
-        if (StrKit.notBlank(controller.getAttrForStr("null_ip"))) {
-            controller.renderJson(Tool.pushResult(-1, controller.getAttrForStr("null_ip")));
+        if (StrKit.notBlank(controller.getAttrForStr("null_name"))) {
+            controller.renderJson(Tool.pushResult(-1, controller.getAttrForStr("null_name")));
             return;
         }
     }

@@ -3,11 +3,8 @@ package name.iaceob.jget.web.controller.post;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.interceptor.POST;
-import com.jfinal.kit.JsonKit;
-import com.jfinal.plugin.activerecord.Record;
 import name.iaceob.jget.web.common.JobType;
 import name.iaceob.jget.web.kit.Tool;
-import name.iaceob.jget.web.kit.file.FileKit;
 import name.iaceob.jget.web.kit.id.IdKit;
 import name.iaceob.jget.web.model.JobModel;
 import name.iaceob.jget.web.validator.job.CreateJobValidator;
@@ -40,11 +37,11 @@ public class JobPostController extends Controller {
             super.renderJson(Tool.pushResult(-1, "创建任务失败 "));
             return;
         }
+        log.info("任务创建成功, JobID: {}", id);
         super.renderJson(Tool.pushResult(1, "任务添加成功", id));
         /*
         Record res = new Record();
         res.set("id", id).set("size", size);
-        log.info("任务创建成功, JOB INFO: {}", JsonKit.toJson(res));
         super.renderJson(Tool.pushResult(size<0 ? 0 : 1, size<0 ? "任务添加成功, 但是获取文件尺寸失败, 若客户机获取文件信息成功将会修正" : "任务添加成功", res));
         */
     }

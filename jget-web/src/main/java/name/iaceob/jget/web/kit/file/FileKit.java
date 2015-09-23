@@ -21,20 +21,14 @@ public class FileKit extends com.jfinal.kit.FileKit {
      * @return
      */
     public static Integer getFileLengthByUrl(String url) {
-        URLConnection conn = null;
         try {
             URL u = new URL(url);
-            conn = u.openConnection();
-            return conn.getContentLength();
+            URLConnection conn = u.openConnection();
+            Integer size = conn.getContentLength();
+            conn.getInputStream().close();
+            return size;
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-        } finally {
-            try {
-                if (conn!=null)
-                    conn.getInputStream().close();
-            } catch (IOException e) {
-                log.error(e.getMessage(), e);
-            }
         }
         return -1;
     }
