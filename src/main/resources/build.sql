@@ -1,5 +1,7 @@
 
 
+
+
 create table j_account(
 id varchar(30) not null,
 name varchar(30) not null,
@@ -24,7 +26,7 @@ name varchar(100) not null,
 suffix varchar(10) not null,
 sz decimal not null,
 path varchar(30) not null,
-url varchar(255) not nul,
+url varchar(255) not null,
 type int not null,
 ctime timestamp default now(),
 primary key(id)
@@ -46,12 +48,12 @@ primary key(job, ctime)
 );
 comment on table j_job_stat is '任务状态';
 comment on column j_job_stat.job is '任务';
-comment on column j_job_stat.ctime is '状态';
+comment on column j_job_stat.stat is '状态';
 
 
 create table j_job_progress(
 job varchar(30) not null,
-progress double not null,
+progress double precision not null,
 mtime timestamp default now(),
 primary key(job)
 );
@@ -66,9 +68,9 @@ cli varchar(30) not null,
 ctime timestamp default now(),
 primary key (job)
 );
-comment on table j_local is '任务执行机';
-comment on column j_local.job is '任务';
-comment on column j_local.cli is '客户机';
+comment on table j_job_cli is '任务执行机';
+comment on column j_job_cli.job is '任务';
+comment on column j_job_cli.cli is '客户机';
 
 
 create table j_cli(
@@ -116,6 +118,8 @@ drop table j_cli;
 drop table j_cli_account;
 drop view v_job_stat;
 */
+
+
 
 
 
