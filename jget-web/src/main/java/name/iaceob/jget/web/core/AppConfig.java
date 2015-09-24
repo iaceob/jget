@@ -64,6 +64,7 @@ public class AppConfig extends JFinalConfig {
         routes.add("/cli", CliController.class);
         routes.add("/job", JobController.class);
 
+
         routes.add("/post/cli", CliPostController.class);
         routes.add("/post/job", JobPostController.class);
         routes.add("/post/account", AccountPostController.class);

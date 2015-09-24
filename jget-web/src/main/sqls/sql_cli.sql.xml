@@ -11,12 +11,18 @@
             update j_cli set heartbeat=now() where id=?
         </sql>
         <sql id="getClis">
-            select id, name, ip, heartbeat, ctime from j_cli where usr=?
+            <![CDATA[
+            select id, name, ip, heartbeat, ctime, extract(epoch from (now()-heartbeat))>? as expired from j_cli where usr=?
+            order by ctime desc
+            ]]>
         </sql>
         <sql id="getUsableClis">
             <![CDATA[
             select id, name, ip, heartbeat, ctime from j_cli where usr=? and extract(epoch from (now()-heartbeat))<?
             ]]>
+        </sql>
+        <sql id="getCountCliByUsr">
+            select count(id) as c from j_cli where usr=?
         </sql>
     </container>
 </slxlme>

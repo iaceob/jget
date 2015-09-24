@@ -37,14 +37,20 @@ public class CliModel {
         return Db2.update(sql, id)!=0;
     }
 
-    public List<Record> getClis(String usr) {
-        String sql = SqlKit.getSql("Cli.getClis");
-        return Db2.find(sql, usr);
-    }
-
     public List<Record> getUsabledClis(String usr, Integer expired) {
         String sql = SqlKit.getSql("Cli.getUsableClis");
         return Db2.find(sql, usr, expired);
     }
+
+    public List<Record> getClis(String usr, Integer expired) {
+        String sql = SqlKit.getSql("Cli.getClis");
+        return Db2.find(sql, expired, usr);
+    }
+
+    public Long getCountCliByUsr(String usr) {
+        String sql = SqlKit.getSql("Cli.getCountCliByUsr");
+        return Db2.findFirst(sql, usr).getLong("c");
+    }
+
 
 }

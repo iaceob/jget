@@ -1,4 +1,6 @@
 
+
+
 create table j_account(
 id varchar(30) not null,
 name varchar(30) not null,
@@ -121,5 +123,6 @@ drop table j_job_stat;
 drop table j_job_progress;
 drop table j_job_cli;
 drop table j_cli;
+drop table j_cli_black;
 */
 

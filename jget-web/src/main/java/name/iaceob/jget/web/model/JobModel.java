@@ -2,6 +2,8 @@ package name.iaceob.jget.web.model;
 
 import com.jfinal.ext.plugin.xlxlme.SqlKit;
 import com.jfinal.plugin.activerecord.Db2;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
 import name.iaceob.jget.web.common.JobStat;
 import name.iaceob.jget.web.common.JobType;
 
@@ -41,13 +43,22 @@ public class JobModel {
     public Boolean createJob(String id, String name, String suffix, Integer size,
                              String path, String url, JobType type, String cli,
                              String usr, String cookie) {
-        Boolean res = Db2.tx(()->{
+        Boolean res = Db2.tx(() -> {
             if (!JobModel.dao.saveJob(id, name, suffix, size, path, url, type, usr, cookie)) return false;
             if (!JobModel.dao.saveJobCli(id, cli)) return false;
             if (!JobModel.dao.saveJobStat(id, JobStat.WAIT)) return false;
             return JobModel.dao.startProgress(id);
         });
         return res;
+    }
+
+    public Page<Record> getPageJob(JobStat[] stats, Integer pageNumber, Integer pageSize) {
+        String sql = SqlKit.getSqlIn("Job.getPageJob", stats.length);
+        String[] sqls = sql.split("#");
+        String[] statsStr = new String[stats.length];
+        for (Integer i=stats.length; i-->0;)
+            statsStr[i] = stats[i].getStat();
+        return Db2.paginate(pageNumber, pageSize, sqls[0], sqls[1], statsStr);
     }
 
 }

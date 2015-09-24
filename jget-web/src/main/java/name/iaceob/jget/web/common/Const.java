@@ -14,5 +14,7 @@ public class Const {
     public static final char[] ILLEGALTEXT = {'~', '!', '@', '#', '$', '%', '^',
             '&', '*', '(', ')', '_', '+', '|', '}', '{', '"', ':', '?', '>', '<',
             '\\', ']', '[', '\'', ';', ',', '/', '.', ']', '-', '='};
+    public static final Integer PAGESIZE = 20;
+    public static final String PAGEPARA = "page";
 
 }

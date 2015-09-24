@@ -43,7 +43,22 @@
         </div>
     </form>
 </div>
-<div id="box_res"></div>
+<div>
+    <!--@
+    for(var i=0; i<clis.~size; i++) {
+    -->
+    <section style="border-bottom: 1px solid #333">
+        <p><strong>id:</strong> ${clis[i].id}
+        <p><strong>name:</strong> ${clis[i].name}
+        <p><strong>ip:</strong> ${clis[i].ip}
+        <p><strong>heartbeat:</strong> ${clis[i].heartbeat, dateFormat='yyyy-MM-dd HH:mm:ss'}
+        <p><strong>expired:</strong> ${clis[i].expired}
+        <p><strong>ctime:</strong> ${clis[i].ctime, dateFormat='yyyy-MM-dd HH:mm:ss'}
+    </section>
+    <!--@
+    }
+    -->
+</div>
 <!--@};-->
 
 <!--@include("/layout/layout_default.html", {title: title, header: header, container: container, footer: footer}){}-->

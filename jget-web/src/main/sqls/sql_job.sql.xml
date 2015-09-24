@@ -16,5 +16,15 @@
         <sql id="saveJobCli">
             insert into j_job_cli (job, cli) values (?,?)
         </sql>
+        <sql id="getPageJob">
+            <![CDATA[
+            select
+            j.id, j.name, j.suffix, j.sz, j.path, j.type,
+            j.url, vjs.stat, j.cookie, j.ctime # from j_job as j
+            left join v_job_stat as vjs on j.id=vjs.job
+            where vjs.stat ##
+            order by j.ctime desc
+            ]]>
+        </sql>
     </container>
 </slxlme>

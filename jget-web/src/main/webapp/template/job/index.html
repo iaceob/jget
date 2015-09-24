@@ -12,6 +12,23 @@
 <div>
     <p><a href="${basePath}/job/create">create</a>
 </div>
+<div>
+    <!--@
+    for(var i=0; i<p.list.~size; i++) {
+    -->
+    <section style="border-bottom: 1px solid #333">
+        <p><strong>url:</strong> ${p.list[i].url}
+        <p><strong>cookie:</strong> ${p.list[i].cookie}
+        <p><strong>path:</strong> ${p.list[i].path}
+        <p><strong>save file:</strong> ${p.list[i].name}.${p.list[i].suffix}
+        <p><strong>type:</strong> ${p.list[i].type}
+        <p><strong>stat:</strong> ${p.list[i].stat}
+    </section>
+    <!--@
+    }
+    -->
+</div>
+${pagination(request, p.totalRow, p.totalPage, p.pageNumber, p.pageSize, 'page')}
 <!--@};-->
 
 <!--@include("/layout/layout_default.html", {title: title, header: header, container: container, footer: footer}){}-->
