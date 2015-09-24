@@ -3,6 +3,7 @@ package name.iaceob.jget.web.controller.post;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.interceptor.POST;
+import name.iaceob.jget.web.common.AccountKit;
 import name.iaceob.jget.web.common.JobType;
 import name.iaceob.jget.web.kit.Tool;
 import name.iaceob.jget.web.kit.id.IdKit;
@@ -32,7 +33,7 @@ public class JobPostController extends Controller {
         // 对于 web 来说获取远程文件长度太耗时, 这个数量由客户机进行修改
         // Integer size = FileKit.getFileLengthByUrl(url);
         Integer size = 0;
-        String usr = "1";
+        String usr = AccountKit.getId();
         if (!JobModel.dao.createJob(id, name, suffix, size, path, url, type, cli, usr, cookie)) {
             super.renderJson(Tool.pushResult(-1, "创建任务失败 "));
             return;

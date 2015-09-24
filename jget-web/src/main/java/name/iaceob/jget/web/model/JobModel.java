@@ -15,7 +15,7 @@ public class JobModel {
     private Boolean saveJob(String id, String name, String suffix, Integer size,
                           String path, String url, JobType type, String usr, String cookie) {
         String sql = SqlKit.getSql("Job.createJob");
-        return Db2.update(sql, id, name, suffix, size, path, url, type.getIndex(), usr, cookie)!=0;
+        return Db2.update(sql, id, name, suffix.toLowerCase(), size, path, url, type.getIndex(), usr, cookie)!=0;
     }
 
     private Boolean startProgress(String job) {

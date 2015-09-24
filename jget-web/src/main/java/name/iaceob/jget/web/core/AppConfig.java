@@ -13,6 +13,7 @@ import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.druid.DruidStatViewHandler;
 import com.jfinal.render.ViewType;
 import name.iaceob.jget.web.common.Const;
+import name.iaceob.jget.web.controller.post.AccountPostController;
 import name.iaceob.jget.web.controller.post.CliPostController;
 import name.iaceob.jget.web.controller.post.JobPostController;
 import name.iaceob.jget.web.controller.show.AccountController;
@@ -20,8 +21,10 @@ import name.iaceob.jget.web.controller.show.CliController;
 import name.iaceob.jget.web.controller.show.IndexController;
 import name.iaceob.jget.web.controller.show.JobController;
 import name.iaceob.jget.web.factory.BeetlFactory;
+import name.iaceob.jget.web.handler.AccountHandler;
 import name.iaceob.jget.web.handler.BasePathHandler;
 import name.iaceob.jget.web.handler.ParamsHandler;
+import name.iaceob.jget.web.interceptor.AccountInterceptor;
 import org.beetl.core.GroupTemplate;
 import org.beetl.ext.fn.JsonFunction;
 import org.beetl.ext.fn.NoteFunction;
@@ -63,6 +66,7 @@ public class AppConfig extends JFinalConfig {
 
         routes.add("/post/cli", CliPostController.class);
         routes.add("/post/job", JobPostController.class);
+        routes.add("/post/account", AccountPostController.class);
     }
 
     @Override
@@ -85,6 +89,7 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configInterceptor(Interceptors interceptors) {
+        interceptors.add(new AccountInterceptor());
     }
 
     @Override
@@ -92,6 +97,7 @@ public class AppConfig extends JFinalConfig {
         handlers.add(new DruidStatViewHandler(this.pro.get("pro.druid.statPath")));
         handlers.add(new BasePathHandler("resPath", "/well"));
         handlers.add(new ParamsHandler());
+        handlers.add(new AccountHandler("usr"));
     }
 
 

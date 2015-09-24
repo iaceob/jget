@@ -13,7 +13,13 @@ public class AccountModel {
     public static final AccountModel dao = new AccountModel();
 
 
+    public Boolean exit(String name, String email) {
+        String sql = SqlKit.getSql("Account.exist");
+        return Db2.findFirst(sql, name, email)!=null;
+    }
+
     public Boolean saveAccount(String id, String name, String email, String passwd) {
+        if (this.exit(name, email)) return false;
         String sql = SqlKit.getSql("Account.saveAccount");
         return Db2.update(sql, id, name, email, passwd)!=0;
     }

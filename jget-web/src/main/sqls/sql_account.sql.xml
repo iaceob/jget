@@ -13,5 +13,8 @@
         <sql id="disabledAccount">
             update j_account set stat=? where id=?
         </sql>
+        <sql id="exist">
+            select 1 from j_account where name=? or email=?
+        </sql>
     </container>
 </slxlme>

@@ -1,7 +1,4 @@
 
-
-
-
 create table j_account(
 id varchar(30) not null,
 name varchar(30) not null,
@@ -12,6 +9,7 @@ ctime timestamp default now(),
 primary key(id)
 );
 create unique index uq_account_name on j_account(name);
+create unique index uq_account_email on j_account(email);
 comment on table j_account is '账户表';
 comment on column j_account.id is '主键';
 comment on column j_account.name is '帐户名';
@@ -116,19 +114,12 @@ select job, max(ctime) as ctime from j_job_stat group by job
 
 
 /*
+drop view v_job_stat;
 drop table j_account;
 drop table j_job;
 drop table j_job_stat;
 drop table j_job_progress;
 drop table j_job_cli;
 drop table j_cli;
-drop table j_cli_account;
-drop view v_job_stat;
 */
-
-
-
-
-
-
 
