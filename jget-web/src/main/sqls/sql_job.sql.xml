@@ -26,5 +26,15 @@
             order by j.ctime desc
             ]]>
         </sql>
+        <sql id="getToBeExecJobByCli">
+            select
+            j.id, j.name, j.suffix, j.path, j.ctime, j.type,
+            j.cookie /*,jc.cli, vjs.stat*/
+            from j_job as j
+            left join j_job_cli as jc on j.id=jc.job
+            left join v_job_stat as vjs on j.id=vjs.job
+            where vjs.stat=? and jc.cli=?
+            order by j.ctime desc
+        </sql>
     </container>
 </slxlme>

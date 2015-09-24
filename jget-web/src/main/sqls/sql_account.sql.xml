@@ -5,7 +5,7 @@
             insert into j_account (id, name, email, passwd) values (?,?,?, ?)
         </sql>
         <sql id="getAccountByName">
-            select id, name, email, passwd, stat from j_account where name=?
+            select id, name, email, passwd, stat from j_account where name=? and stat=?
         </sql>
         <sql id="getAccountById">
             select id, name, email, passwd, stat from j_account where id=?

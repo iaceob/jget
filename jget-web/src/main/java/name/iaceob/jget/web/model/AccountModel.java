@@ -26,7 +26,7 @@ public class AccountModel {
 
     public Record getAccountByName(String name) {
         String sql = SqlKit.getSql("Account.getAccountByName");
-        return Db2.findFirst(sql, name);
+        return Db2.findFirst(sql, name, AccountStat.NORMAL.getIndex());
     }
 
     public Boolean disabledAccount(String id) {

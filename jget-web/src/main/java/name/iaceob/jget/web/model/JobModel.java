@@ -7,6 +7,8 @@ import com.jfinal.plugin.activerecord.Record;
 import name.iaceob.jget.web.common.JobStat;
 import name.iaceob.jget.web.common.JobType;
 
+import java.util.List;
+
 /**
  * Created by cox on 2015/9/22.
  */
@@ -59,6 +61,11 @@ public class JobModel {
         for (Integer i=stats.length; i-->0;)
             statsStr[i] = stats[i].getStat();
         return Db2.paginate(pageNumber, pageSize, sqls[0], sqls[1], statsStr);
+    }
+
+    public List<Record> getToBeExecJobByCli(String cli) {
+        String sql = SqlKit.getSql("Job.getToBeExecJobByCli");
+        return Db2.find(sql, JobStat.WAIT.getStat(), cli);
     }
 
 }

@@ -2,6 +2,7 @@ package name.iaceob.jget.download.core;
 
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
+import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
@@ -51,6 +52,10 @@ public class Jget {
             log.error(e.getMessage(), e);
         }
         return false;
+    }
+
+    public void startHeartbeatThread() {
+
     }
 
     public void startJobThread() {
