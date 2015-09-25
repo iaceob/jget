@@ -23,6 +23,7 @@ import name.iaceob.jget.web.controller.show.JobController;
 import name.iaceob.jget.web.factory.BeetlFactory;
 import name.iaceob.jget.web.handler.AccountHandler;
 import name.iaceob.jget.web.handler.BasePathHandler;
+import name.iaceob.jget.web.handler.CharsetHandler;
 import name.iaceob.jget.web.handler.ParamsHandler;
 import name.iaceob.jget.web.interceptor.AccountInterceptor;
 import org.beetl.core.GroupTemplate;
@@ -47,7 +48,7 @@ public class AppConfig extends JFinalConfig {
         Boolean projectDebug = this.pro.getBoolean("pro.debug");
         log.debug("正在进入" + (projectDebug ? "开发" : "生产") + "环境运行");
         constants.setDevMode(projectDebug);
-        constants.setEncoding(this.pro.get("pri.charset"));
+        constants.setEncoding(this.pro.get("pro.charset", Const.DEFAULTCHARSET));
         constants.setMainRenderFactory(new BeetlFactory());
         constants.setViewType(ViewType.JSP);
         GroupTemplate gte = BeetlFactory.groupTemplate;
@@ -95,10 +96,12 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configHandler(Handlers handlers) {
-        handlers.add(new DruidStatViewHandler(this.pro.get("pro.druid.statPath")));
+        if (this.pro.getBoolean("pro.druid.monitor.open"))
+            handlers.add(new DruidStatViewHandler(this.pro.get("pro.druid.monitor.path")));
         handlers.add(new BasePathHandler("resPath", "/well"));
         handlers.add(new ParamsHandler());
         handlers.add(new AccountHandler("usr"));
+        handlers.add(new CharsetHandler(this.pro.get("pro.charset", Const.DEFAULTCHARSET)));
     }
 
 

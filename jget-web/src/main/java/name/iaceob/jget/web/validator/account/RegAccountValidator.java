@@ -12,11 +12,16 @@ import name.iaceob.jget.web.kit.Tool;
 public class RegAccountValidator extends Validator {
     @Override
     protected void validate(Controller controller) {
+        System.out.println(controller.getRequest().getRequestURL());
         super.validateRequiredString("name", "null_name", "请输入账户");
         super.validateRequiredString("email", "null_email", "请输入邮箱");
         super.validateRequiredString("passwd", "null_passwd", "请输入密码");
         super.validateEmail("email", "fail_email", "请输入正确的邮箱");
         String name = controller.getPara("name");
+        if (StrKit.isBlank(name)) {
+            super.addError("null_name", "请输入账户");
+            return;
+        }
         for (char cr : Const.ILLEGALTEXT) {
             for (Integer i=name.length(); i-->0;) {
                 char c = name.charAt(i);

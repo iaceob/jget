@@ -1,12 +1,15 @@
 package name.iaceob.jget.web.controller.show;
 
+import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
+import com.jfinal.ext.interceptor.POST;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.Record;
 import name.iaceob.jget.web.common.AccountKit;
 import name.iaceob.jget.web.common.Const;
 import name.iaceob.jget.web.kit.Tool;
 import name.iaceob.jget.web.model.CliModel;
+import name.iaceob.jget.web.validator.cli.HeartbearCliValidator;
 
 import java.util.List;
 
@@ -22,14 +25,5 @@ public class CliController extends Controller {
         super.render("/cli/index.html");
     }
 
-
-    public void heartbeat() {
-        String id  = super.getPara("id");
-        if (!CliModel.dao.heartbeatCli(id)) {
-            super.renderJson(Tool.pushResult(-1, "心跳失败"));
-            return;
-        }
-        super.renderJson(Tool.pushSuccess());
-    }
 
 }

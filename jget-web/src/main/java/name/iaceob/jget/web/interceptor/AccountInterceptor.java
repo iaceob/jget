@@ -3,6 +3,7 @@ package name.iaceob.jget.web.interceptor;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.core.Controller;
+import com.jfinal.kit.PropKit;
 import name.iaceob.jget.web.common.AccountKit;
 import name.iaceob.jget.web.common.Const;
 import name.iaceob.jget.web.kit.disgest.Disgest;
@@ -19,14 +20,15 @@ public class AccountInterceptor implements Interceptor {
     public void intercept(Invocation invocation) {
         Controller c = invocation.getController();
         // String basePath = c.getRequest().getContextPath();
-        Cookie heart = c.getCookieObject(Const.HEARTKEY);
+        Cookie heart = c.getCookieObject(PropKit.use(Const.PROPFILE).get("pro.key.heart", Const.HEARTKEY));
         if (heart==null) {
             AccountKit.clear();
             c.redirect("/account/signin");
             return;
         }
         try {
-            String heartContent = Disgest.decodeRC4(heart.getValue(), Const.HEARTCRYSEED);
+            String heartContent = Disgest.decodeRC4(heart.getValue(),
+                    PropKit.use(Const.PROPFILE).get("pro.seed.heart", Const.HEARTCRYSEED));
             String[] accountInfo = heartContent.split(Const.HEARTESPLIT);
             Long cookieTime = Long.parseLong(accountInfo[3]);
             /*

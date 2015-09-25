@@ -6,6 +6,7 @@ import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Record;
 
 import javax.net.ssl.*;
+import javax.print.DocFlavor;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -70,38 +71,18 @@ public class HttpKit {
         return conn;
     }
 
-//    public static String get(String url, Map<String, String> queryParas, Map<String, String> headers) {
-//        HttpURLConnection conn = null;
-//
-//        String e;
-//        try {
-//            conn = getHttpConnection(buildUrlWithQueryString(url, queryParas), "GET", headers);
-//            conn.connect();
-//            e = readResponseString(conn);
-//        } catch (Exception var8) {
-//            throw new RuntimeException(var8);
-//        } finally {
-//            if(conn != null) {
-//                conn.disconnect();
-//            }
-//
-//        }
-//
-//        return e;
-//    }
 
-    public static HttpEntity get(String url, Map<String, String> queryParas, Map<String, String> headers) {
+    public static HttpEntity get(String url, Map<String, String> paras, Map<String, String> headers, String charset) {
         HttpURLConnection conn = null;
         try {
-            conn = getHttpConnection(buildUrlWithQueryString(url, queryParas), "GET", headers);
+            conn = getHttpConnection(buildUrlWithQueryString(url, paras, charset), "GET", headers);
             conn.connect();
             HttpEntity he = new HttpEntity();
-            he.setHtml(readResponseString(conn));
+            he.setHtml(readResponseString(conn, charset));
             Map<String, List<String>> hfs = conn.getHeaderFields();
             Set<String> set = hfs.keySet();
             Iterator<String> it = set.iterator();
             Record hs = new Record();
-            System.out.println(JsonKit.toJson(hfs));
             while (it.hasNext()) {
                 String key = it.next();
                 // it.remove();
@@ -124,28 +105,52 @@ public class HttpKit {
         }
     }
 
+    public static HttpEntity get(String url, Map<String, String> paras, Map<String, String> header) {
+        return get(url, paras, header, "UTF-8");
+    }
+
+    public static HttpEntity get(String url, Map<String, String> paras, String charset) {
+        return get(url, paras, (Map)null, charset);
+    }
+
+    public static HttpEntity get(String url, String charset) {
+        return get(url, (Map)null, (Map)null, charset);
+    }
+
+    public static HttpEntity get(String url) {
+        return get(url, "UTF-8");
+    }
 
 
-//    public static String get(String url, Map<String, String> queryParas) {
-//        return get(url, queryParas, (Map)null);
-//    }
-//
-//    public static String get(String url) {
-//        return get(url, (Map)null, (Map)null);
-//    }
 
-    public static String post(String url, Map<String, String> queryParas, String data, Map<String, String> headers) {
+    public static HttpEntity post(String url, Map<String, String> paras, String data, Map<String, String> headers, String charset) {
         HttpURLConnection conn = null;
 
-        String var6;
+        HttpEntity he = new HttpEntity();
         try {
-            conn = getHttpConnection(buildUrlWithQueryString(url, queryParas), "POST", headers);
+            conn = getHttpConnection(buildUrlWithQueryString(url, paras, charset), "POST", headers);
             conn.connect();
             OutputStream e = conn.getOutputStream();
-            e.write(data.getBytes("UTF-8"));
+            e.write(data.getBytes(charset));
             e.flush();
             e.close();
-            var6 = readResponseString(conn);
+
+            he.setHtml(readResponseString(conn, charset));
+            Map<String, List<String>> hfs = conn.getHeaderFields();
+            Set<String> set = hfs.keySet();
+            Iterator<String> it = set.iterator();
+            Record hs = new Record();
+            while (it.hasNext()) {
+                String key = it.next();
+                // it.remove();
+                List<String> contents = hfs.get(key);
+                if (contents.size()==1) {
+                    hs.set(key, contents.get(0));
+                    continue;
+                }
+                hs.set(key, contents);
+            }
+            he.setHeader(hs);
         } catch (Exception var10) {
             throw new RuntimeException(var10);
         } finally {
@@ -155,28 +160,40 @@ public class HttpKit {
 
         }
 
-        return var6;
+        return he;
     }
 
-    public static String post(String url, Map<String, String> queryParas, String data) {
-        return post(url, queryParas, data, (Map)null);
+    public static HttpEntity post(String url, Map<String, String> paras, String data, Map<String, String> headers) {
+        return post(url, paras, data, headers, "UTF-8");
     }
 
-    public static String post(String url, String data, Map<String, String> headers) {
+    public static HttpEntity post(String url, Map<String, String> paras, String data) {
+        return post(url, paras, data, (Map)null);
+    }
+
+    public static HttpEntity post(String url, String data, Map<String, String> headers) {
         return post(url, (Map)null, data, headers);
     }
 
-    public static String post(String url, String data) {
+    public static HttpEntity post(String url, String data, String charset) {
+        return post(url, (Map)null, data, (Map)null, charset);
+    }
+
+    public static HttpEntity post(String url, String data) {
         return post(url, (Map)null, data, (Map)null);
     }
 
     private static String readResponseString(HttpURLConnection conn) {
+        return readResponseString(conn, "UTF-8");
+    }
+
+    private static String readResponseString(HttpURLConnection conn, String charset) {
         StringBuilder sb = new StringBuilder();
         InputStream inputStream = null;
 
         try {
             inputStream = conn.getInputStream();
-            BufferedReader e = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            BufferedReader e = new BufferedReader(new InputStreamReader(inputStream, charset));
             String line = null;
 
             while((line = e.readLine()) != null) {
@@ -200,6 +217,10 @@ public class HttpKit {
     }
 
     private static String buildUrlWithQueryString(String url, Map<String, String> queryParas) {
+        return buildUrlWithQueryString(url, queryParas, "UTF-8");
+    }
+
+    private static String buildUrlWithQueryString(String url, Map<String, String> queryParas, String charset) {
         if(queryParas != null && !queryParas.isEmpty()) {
             StringBuilder sb = new StringBuilder(url);
             boolean isFirst;
@@ -224,7 +245,7 @@ public class HttpKit {
                 value = (String)entry.getValue();
                 if(StrKit.notBlank(value)) {
                     try {
-                        value = URLEncoder.encode(value, "UTF-8");
+                        value = URLEncoder.encode(value, charset);
                     } catch (UnsupportedEncodingException var9) {
                         throw new RuntimeException(var9);
                     }

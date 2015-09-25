@@ -8,7 +8,7 @@
             select id from j_cli where name=? and usr=?
         </sql>
         <sql id="heartbeatCli">
-            update j_cli set heartbeat=now() where id=?
+            update j_cli set heartbeat=now(), ip=? where id=?
         </sql>
         <sql id="getClis">
             <![CDATA[

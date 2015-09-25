@@ -1,5 +1,6 @@
 package name.iaceob.jget.download.kit.http;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +19,14 @@ public class HttpParse {
         for (String ck : cookie)
             sb.append(parseCookie(ck)).append(";");
         return sb.toString();
+    }
+
+    public static Date parseDate(String dateStr) {
+        return null;
+    }
+
+    public static String parseReponse(String msg) {
+        return null;
     }
 
 }

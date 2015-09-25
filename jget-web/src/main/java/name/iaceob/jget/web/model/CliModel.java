@@ -15,7 +15,7 @@ public class CliModel {
 
     public static final CliModel dao = new CliModel();
 
-    private String existCli(String name, String usr) {
+    public String existCli(String name, String usr) {
         String sql = SqlKit.getSql("Cli.existCli");
         Record r = Db2.findFirst(sql, name, usr);
         if (r==null) return null;
@@ -25,16 +25,16 @@ public class CliModel {
     public String registerCli(String name, String ip, String usr) {
         String id = this.existCli(name, usr);
         if (StrKit.notBlank(id))
-            return this.heartbeatCli(id) ? id : null;
+            return this.heartbeatCli(id, ip) ? id : null;
         id = IdKit.run.genId();
         String sql = SqlKit.getSql("Cli.registerCli");
         Integer res = Db2.update(sql, id, name, ip, usr);
         return res!=0 ? id : null;
     }
 
-    public Boolean heartbeatCli(String id) {
+    public Boolean heartbeatCli(String id, String ip) {
         String sql = SqlKit.getSql("Cli.heartbeatCli");
-        return Db2.update(sql, id)!=0;
+        return Db2.update(sql, ip, id)!=0;
     }
 
     public List<Record> getUsabledClis(String usr, Integer expired) {

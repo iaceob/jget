@@ -1,18 +1,22 @@
 package name.iaceob.jget.download.core;
 
-import com.alibaba.druid.filter.stat.StatFilter;
-import com.alibaba.druid.wall.WallFilter;
-import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
-import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
-import com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect;
-import com.jfinal.plugin.druid.DruidPlugin;
 import name.iaceob.jget.download.common.Const;
-import name.iaceob.jget.download.common.SourceType;
+import name.iaceob.jget.download.entity.JgetEntity;
+import name.iaceob.jget.download.kit.CliKit;
+import name.iaceob.jget.download.kit.IpKit;
+import name.iaceob.jget.download.model.AccountModel;
+import name.iaceob.jget.download.model.CliModel;
+import name.iaceob.jget.download.thread.AccountConnectThread;
+import name.iaceob.jget.download.thread.CliHeartbeatThread;
+import name.iaceob.jget.download.thread.CliIpThread;
 import name.iaceob.jget.download.thread.JobSearchThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * Created by iaceob on 2015/9/19.
@@ -25,48 +29,105 @@ public class Jget {
 
     public Boolean initConf() {
         try {
-            DruidPlugin dp = new DruidPlugin(
-                this.conf.get("db.psql.url"),
-                this.conf.get("db.psql.username"),
-                this.conf.get("db.psql.passwd")
-            );
-            dp.addFilter(new StatFilter());
-            WallFilter wo = new WallFilter();
-            wo.setDbType("postgresql");
-            dp.addFilter(wo);
-            dp.setMaxActive(this.conf.getInt("db.psql.max_active"));
+            log.info("初始化客户机信息 ...");
 
-            ActiveRecordPlugin arp = new ActiveRecordPlugin(SourceType.PSQL.getName(), dp);
-            arp.setDialect(new PostgreSqlDialect());
-            // arpo.setContainerFactory(new CaseInsensitiveContainerFactory());
-            arp.setShowSql(this.conf.getBoolean("jget.dev"));
+            // 如果发现没有配置客户机名称, 则默认去当前机器的名称
+            InetAddress ia = InetAddress.getLocalHost();
+            String hostName = ia.getHostName();
 
-            if (!dp.start()||!arp.start()) {
-                log.error("连接数据库: " + this.conf.get("db.psql.url") + " 失败");
+            String cliName = this.conf.get("jget.cli.name", hostName);
+            String ip = IpKit.getPublicIp();
+            String server = this.conf.getBoolean("jget.server.ssl") ? "https" : "http" + "://" +
+                    this.conf.get("jget.server.host") + ":" + this.conf.get("jget.server.port") +
+                    this.conf.get("jget.server.basepath");
+            CliKit.setCliName(cliName);
+            CliKit.setIp(ip);
+            CliKit.setServer(server);
+            log.info("客户机名: {}", CliKit.getCliName());
+            log.info("客户机IP: {}", CliKit.getIp());
+            log.info("服务端地址: {}", CliKit.getServer());
+
+
+            String user = this.conf.get("jget.account.name");
+            String passwd = this.conf.get("jget.account.passwd");
+            JgetEntity jeUsr = AccountModel.dao.connectAccount(user, passwd);
+            log.info("来自服务端的消息: {}", jeUsr.getMsg());
+            if (jeUsr.getStat()<0) {
+                log.error("账户连接失败, 请检查账户配置; 配置项目: 账户 [ jget.account.name ] 密码 [ jget.account.passwd ]");
                 return false;
             }
-            log.info("连接数据库: " + this.conf.get("db.psql.url") + " 成功");
+            log.info("连接账户 {} 成功", user);
+            CliKit.setUsr(jeUsr.getCookie());
 
+            JgetEntity jeCli = CliModel.dao.registerCli(CliKit.getServer(), CliKit.getIp(), CliKit.getCliName(), CliKit.getUsr());
+            log.info("来自服务端的消息: {}", jeCli.getMsg());
+            if (jeCli.getStat()<0) {
+                log.error("客户机注册失败, 错误原因: {}", jeCli.getMsg());
+                return false;
+            }
+            CliKit.setCliId(jeCli.getExtra());
+            log.info("客户机注册成功, Cli Id: {}", CliKit.getCliId());
+
+            log.info("客户机信息初始化成功");
             return true;
+        } catch (UnknownHostException e) {
+            log.error("获取机器名称失败", e);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         return false;
     }
 
-    public void startHeartbeatThread() {
 
+    public void startJobThread(String threadName) {
+        Thread t = new Thread(new JobSearchThread(), threadName);
+        t.start();
     }
 
-    public void startJobThread() {
-        Thread jt = new Thread(new JobSearchThread());
-        jt.start();
+    /**
+     * 更新客户机 IP
+     * @param interval 间隔时间 (h)
+     * @param threadName 线程名
+     */
+    public void startCliIpThread(Integer interval, String threadName) {
+        Thread t = new Thread(new CliIpThread(interval), threadName);
+        t.start();
     }
 
+    /**
+     * 账户连接线程
+     * @param name 账户名
+     * @param passwd 密码
+     * @param interval 间隔时间 (d)
+     * @param threadName 线程名
+     */
+    public void startAccountConnect(String name, String passwd, Integer interval, String threadName) {
+        Thread t = new Thread(new AccountConnectThread(CliKit.getServer(), name, passwd, interval), threadName);
+        t.start();
+    }
+
+    /**
+     * 客户机心跳线程
+     * @param server 服务端地址
+     * @param id 客户机id
+     * @param ip 客户机ip
+     * @param usr 连接账户
+     * @param interval 间隔时间 (s)
+     * @param threadName 线程名
+     */
+    public void startCliHeartbeatThread(String server, String id, String ip, String usr, Integer interval, String threadName) {
+        Thread t = new Thread(new CliHeartbeatThread(server, id, ip, usr, interval), threadName);
+        t.start();
+    }
 
     public Boolean start() {
         try {
-            this.startJobThread();
+            this.startCliIpThread(this.conf.getInt("jget.interval.cli_ip"), "ClientIpThread");
+            this.startAccountConnect(this.conf.get("jget.account.name"), this.conf.get("jget.account.passwd"),
+                    this.conf.getInt("jget.interval.account_conn"), "AccountConnectThread");
+            this.startCliHeartbeatThread(CliKit.getServer(), CliKit.getCliId(), CliKit.getIp(), CliKit.getUsr(),
+                    this.conf.getInt("jget.interval.cli_heartbeat"), "CliHeartbeatThread");
+            this.startJobThread("JobThread");
             return true;
         } catch (Exception e) {
             log.error(e.getMessage(), e);

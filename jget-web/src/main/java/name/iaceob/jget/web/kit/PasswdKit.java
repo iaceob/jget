@@ -13,23 +13,31 @@ public class PasswdKit {
 
     private static final Logger log = LoggerFactory.getLogger(PasswdKit.class);
 
-    private static String seedCrypt(String str) {
+    private static String seedCrypt(String str, String seed) {
         // String seed = ConfModel.dao.getValToStr("conf.account.passwd_seed");
-        String rc4e = Disgest.encodeRC4(str, Const.PASSWDSEED);
+        String rc4e = Disgest.encodeRC4(str, seed);
         String md5e = Disgest.encodeMD5(rc4e);
         return md5e;
     }
 
-    public static String encrypt(String str) {
-        String bcre = BCrypt.hashpw(seedCrypt(str), BCrypt.gensalt());
+    public static String encrypt(String str, String seed) {
+        String bcre = BCrypt.hashpw(seedCrypt(str, seed), BCrypt.gensalt());
         log.debug("Encrypt: " + bcre);
         return bcre;
     }
 
-    public static Boolean checkpwd(String src, String hashed) {
-        String pwd = seedCrypt(src);
+    public static String encrypt(String str) {
+        return encrypt(str, Const.PASSWDSEED);
+    }
+
+    public static Boolean checkpwd(String src, String seed, String hashed) {
+        String pwd = seedCrypt(src, seed);
         log.debug("pwd:" + pwd);
         return BCrypt.checkpw(pwd, hashed);
+    }
+
+    public static Boolean checkpwd(String src, String hashed) {
+        return checkpwd(src, Const.PASSWDSEED, hashed);
     }
 
 

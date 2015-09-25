@@ -6,7 +6,7 @@
 
     <groupId>name.iaceob</groupId>
     <artifactId>jget</artifactId>
-    <version>1.1-alpha</version>
+    <version>1.2-alpha</version>
     <packaging>pom</packaging>
     <name>jget project</name>
     <description>Jget 网络文件下载服务</description>
@@ -14,7 +14,6 @@
     <modules>
         <module>jget-download</module>
         <module>jget-web</module>
-        <module>jget-common</module>
     </modules>
 
     <properties>
@@ -28,16 +27,6 @@
         <version-druid>1.0.5</version-druid>
         <version-pgsql>9.1-901-1.jdbc4</version-pgsql>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>name.iaceob</groupId>
-                <artifactId>jget-common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>

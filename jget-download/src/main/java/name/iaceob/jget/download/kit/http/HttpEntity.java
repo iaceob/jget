@@ -77,10 +77,16 @@ public class HttpEntity extends Record {
             cs = m.group(1);
         if (StrKit.isBlank(cs)) {
             String html = this.getHtml();
-            Pattern p2 = Pattern.compile("charset=[\"|'](.*?)[\"|']|<meta.*content=.*charset=(.*?)[\"|']");
+            Pattern p2 = Pattern.compile("<meta.*charset=[\"|'](.*?)[\"|']");
             Matcher m2 = p2.matcher(html);
             if (m2.find())
-                cs = StrKit.isBlank(m2.group(1)) ? m2.group(2) : m2.group(1);
+                cs = m2.group(1);
+            if (StrKit.isBlank(cs)) {
+                Pattern p3 = Pattern.compile("<meta.*content=.*charset=(.*?)[\"|']");
+                Matcher m3 = p3.matcher(html);
+                if (m3.find())
+                    cs = m3.group(1);
+            }
         }
         return StrKit.isBlank(cs) ? null : cs.toUpperCase();
     }

@@ -5,7 +5,7 @@
     <parent>
         <artifactId>jget</artifactId>
         <groupId>name.iaceob</groupId>
-        <version>1.1-alpha</version>
+        <version>1.2-alpha</version>
     </parent>
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
@@ -16,17 +16,19 @@
 
     <properties>
         <version-wget>1.2.12</version-wget>
+        <version-fastjson>1.2.7</version-fastjson>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>name.iaceob</groupId>
-            <artifactId>jget-common</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.github.axet</groupId>
             <artifactId>wget</artifactId>
             <version>${version-wget}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${version-fastjson}</version>
         </dependency>
     </dependencies>
 

@@ -4,6 +4,7 @@ import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.interceptor.POST;
+import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.Record;
 import name.iaceob.jget.web.common.Const;
 import name.iaceob.jget.web.interceptor.AccountInterceptor;
@@ -31,7 +32,8 @@ public class AccountPostController extends Controller {
             super.renderJson(Tool.pushResult(-1, "账户或者密码错误"));
             return;
         }
-        if (!PasswdKit.checkpwd(passwd, a.getStr("passwd"))) {
+        String seed = PropKit.use(Const.PROPFILE).get("pro.seed.passwd", Const.PASSWDSEED);
+        if (!PasswdKit.checkpwd(passwd, seed, a.getStr("passwd"))) {
             super.renderJson(Tool.pushResult(-1, "账户或者密码错误"));
             return;
         }
@@ -39,7 +41,8 @@ public class AccountPostController extends Controller {
                 + a.getStr("name") + Const.HEARTESPLIT
                 + a.getStr("email") + Const.HEARTESPLIT
                 + System.currentTimeMillis();
-        super.setCookie(Const.HEARTKEY, Disgest.encodeRC4(cookieVal, Const.HEARTCRYSEED), 60*60*24*30);
+        super.setCookie(PropKit.use(Const.PROPFILE).get("pro.key.heart", Const.HEARTKEY),
+                Disgest.encodeRC4(cookieVal, PropKit.use(Const.PROPFILE).get("pro.seed.heart", Const.HEARTCRYSEED)), 60*60*24*30);
         super.renderJson(Tool.pushResult(1, "登入成功"));
     }
 
@@ -57,7 +60,8 @@ public class AccountPostController extends Controller {
             super.renderJson(Tool.pushResult(-1, "该账户或者邮箱已经被使用"));
             return;
         }
-        if (!AccountModel.dao.saveAccount(id, name, email, PasswdKit.encrypt(passwd))) {
+        String seed = PropKit.use(Const.PROPFILE).get("pro.seed.passwd", Const.PASSWDSEED);
+        if (!AccountModel.dao.saveAccount(id, name, email, PasswdKit.encrypt(passwd, seed))) {
             super.renderJson(Tool.pushResult(-1, "注册失败"));
             return;
         }

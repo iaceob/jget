@@ -108,11 +108,24 @@ comment on column j_cli_black.target is '客户机名称或者ip';
 comment on column j_cli_black.type is '名称或者ip标识';
 
 
+create table j_usr_conn(
+usr varchar(30) not null,
+cli varchar(30) not null,
+heartbeat timestamp,
+ctime timestamp default now(),
+primary key(usr, cli, ctime);
+);
+comment on table j_usr_conn is '账户的登录记录表, 主要记录客户机和服务账户连接的信息, 同时可以用作限制相同账户限制登录的数量';
+comment on column j_usr_conn.usr is '账户';
+comment on column j_usr_conn.cli is '客户机';
+comment on column j_usr_conn.heartbeat is '心跳时间';
+
 create view v_job_stat as
 select js2.job, js1.stat, js2.ctime from j_job_stat as js1
 right join (
 select job, max(ctime) as ctime from j_job_stat group by job
 ) as js2 on js1.job=js2.job and js1.ctime=js2.ctime;
+
 
 
 /*
