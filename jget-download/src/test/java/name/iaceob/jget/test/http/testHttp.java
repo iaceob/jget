@@ -16,7 +16,7 @@ public class testHttp {
     @Test
     public void ttd1() throws Exception{
 
-        HttpEntity he = HttpKit.get("http://www.xiami.com/radio/play/id/2", (Map) null, (Map) null);
+        HttpEntity he = HttpKit.get("http://ip.cip.cc", (Map) null, (Map) null);
         // HttpEntity he = HttpKit.get("https://taobao.com", (Map) null, (Map) null);
         System.out.println(JsonKit.toJson(he));
         // System.out.println(he.getHtml());

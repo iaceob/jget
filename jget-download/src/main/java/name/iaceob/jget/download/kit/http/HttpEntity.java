@@ -30,7 +30,8 @@ public class HttpEntity extends Record {
 
     // ==== Header Method
     public String getContentType() {
-        return this.getHeader().getStr("Content-Type");
+        String ct = this.getHeader().getStr("Content-Type");
+        return StrKit.isBlank(ct) ? null : ct.split(";")[0];
     }
     public Integer getContentLength() {
         return StrKit.isBlank(this.getHeader().getStr("Content-Length")) ? null : Integer.valueOf(this.getHeader().getStr("Content-Length"));
