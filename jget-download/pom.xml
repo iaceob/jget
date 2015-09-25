@@ -10,6 +10,9 @@
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jget-download</artifactId>
+    <name>jget-download</name>
+    <description>file download module</description>
+
 
     <properties>
         <version-wget>1.2.12</version-wget>
@@ -19,7 +22,6 @@
         <dependency>
             <groupId>name.iaceob</groupId>
             <artifactId>jget-common</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.axet</groupId>

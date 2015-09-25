@@ -10,6 +10,8 @@
     <packaging>war</packaging>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jget-web</artifactId>
+    <name>jget-web</name>
+    <description>jget job service</description>
 
     <properties>
         <version-jeety>8.1.8</version-jeety>
@@ -20,7 +22,6 @@
         <dependency>
             <groupId>name.iaceob</groupId>
             <artifactId>jget-common</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.jfinal</groupId>

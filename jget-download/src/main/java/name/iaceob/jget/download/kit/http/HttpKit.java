@@ -1,11 +1,11 @@
-package name.iaceob.jget.web.kit.http;
+package name.iaceob.jget.download.kit.http;
 
 
 import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.StrKit;
+import com.jfinal.plugin.activerecord.Record;
 
 import javax.net.ssl.*;
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -17,8 +17,10 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class HttpKit {
     private static final String GET = "GET";
@@ -93,10 +95,25 @@ public class HttpKit {
         try {
             conn = getHttpConnection(buildUrlWithQueryString(url, queryParas), "GET", headers);
             conn.connect();
-            System.out.println(conn.getResponseCode());
-            System.out.println(conn.getResponseMessage());
-            System.out.println(JsonKit.toJson(conn.getHeaderFields()));
-            System.out.println(readResponseString(conn));
+            HttpEntity he = new HttpEntity();
+            he.setHtml(readResponseString(conn));
+            Map<String, List<String>> hfs = conn.getHeaderFields();
+            Set<String> set = hfs.keySet();
+            Iterator<String> it = set.iterator();
+            Record hs = new Record();
+            System.out.println(JsonKit.toJson(hfs));
+            while (it.hasNext()) {
+                String key = it.next();
+                // it.remove();
+                List<String> contents = hfs.get(key);
+                if (contents.size()==1) {
+                    hs.set(key, contents.get(0));
+                    continue;
+                }
+                hs.set(key, contents);
+            }
+            he.setHeader(hs);
+            return he;
         } catch (Exception var8) {
             throw new RuntimeException(var8);
         } finally {
@@ -105,7 +122,6 @@ public class HttpKit {
             }
 
         }
-        return null;
     }
 
 
@@ -221,33 +237,33 @@ public class HttpKit {
         }
     }
 
-    public static String readIncommingRequestData(HttpServletRequest request) {
-        BufferedReader br = null;
-
-        try {
-            StringBuilder e = new StringBuilder();
-            br = request.getReader();
-            String line = null;
-
-            while((line = br.readLine()) != null) {
-                e.append(line).append("\n");
-            }
-
-            line = e.toString();
-            return line;
-        } catch (IOException var12) {
-            throw new RuntimeException(var12);
-        } finally {
-            if(br != null) {
-                try {
-                    br.close();
-                } catch (IOException var11) {
-                    var11.printStackTrace();
-                }
-            }
-
-        }
-    }
+//    public static String readIncommingRequestData(HttpServletRequest request) {
+//        BufferedReader br = null;
+//
+//        try {
+//            StringBuilder e = new StringBuilder();
+//            br = request.getReader();
+//            String line = null;
+//
+//            while((line = br.readLine()) != null) {
+//                e.append(line).append("\n");
+//            }
+//
+//            line = e.toString();
+//            return line;
+//        } catch (IOException var12) {
+//            throw new RuntimeException(var12);
+//        } finally {
+//            if(br != null) {
+//                try {
+//                    br.close();
+//                } catch (IOException var11) {
+//                    var11.printStackTrace();
+//                }
+//            }
+//
+//        }
+//    }
 
     private class TrustAnyTrustManager implements X509TrustManager {
         private TrustAnyTrustManager() {

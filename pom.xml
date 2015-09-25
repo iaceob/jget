@@ -29,6 +29,16 @@
         <version-pgsql>9.1-901-1.jdbc4</version-pgsql>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>name.iaceob</groupId>
+                <artifactId>jget-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>ch.qos.logback</groupId>
