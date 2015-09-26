@@ -79,4 +79,9 @@ public class JobModel {
         return Db2.find(sql, JobStat.WAIT.getStat(), cli);
     }
 
+    public Boolean updateJobSize(String job, Long size) {
+        String sql = SqlKit.getSql("Job.updateJobSize");
+        return Db2.update(job, size)!=0;
+    }
+
 }

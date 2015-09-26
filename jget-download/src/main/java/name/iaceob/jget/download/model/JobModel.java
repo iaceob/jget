@@ -73,4 +73,15 @@ public class JobModel {
         return this.updateJobStat(server, job, DownloadInfo.States.ERROR, msg, usr);
     }
 
+    public Boolean updateJobSize(String server, String job, Long size, String usr) {
+        Map<String, String> header = new HashMap<>();
+        Map<String, String> paras = new HashMap<>();
+        header.put("Cookie", usr);
+        paras.put("job", job);
+        paras.put("size", size.toString());
+        HttpEntity he = HttpKit.get(server + "/post/job/update_job_size", paras, header);
+        JgetEntity je = JsonKit.fromJson(he.getHtml(), JgetEntity.class);
+        return je.getStat()>0;
+    }
+
 }

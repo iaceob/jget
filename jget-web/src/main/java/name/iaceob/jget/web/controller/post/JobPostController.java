@@ -12,6 +12,7 @@ import name.iaceob.jget.web.kit.id.IdKit;
 import name.iaceob.jget.web.model.JobModel;
 import name.iaceob.jget.web.validator.job.CreateJobValidator;
 import name.iaceob.jget.web.validator.job.RenewProgressValidator;
+import name.iaceob.jget.web.validator.job.UpdateJobSizeValidator;
 import name.iaceob.jget.web.validator.job.UpdateJobStatValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,6 +85,18 @@ public class JobPostController extends Controller {
             return;
         }
         super.renderJson(Tool.pushResult(1, "状态保存成功"));
+    }
+
+
+    @Before({UpdateJobSizeValidator.class})
+    public void update_job_size() {
+        String job = super.getPara("job");
+        Long size = super.getParaToLong("size");
+        if (!JobModel.dao.updateJobSize(job, size)) {
+            super.renderJson(Tool.pushResult(-1, "修改下载文件尺寸失败"));
+            return;
+        }
+        super.renderJson(Tool.pushResult(1, "修改下载文件尺寸成功 "));
     }
 
 }

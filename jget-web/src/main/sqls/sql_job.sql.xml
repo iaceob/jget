@@ -39,5 +39,8 @@
         <sql id="existJobStat">
             select 1 from j_job_stat where job=? and stat=?
         </sql>
+        <sql id="updateJobSize">
+            update j_job set sz=? where job=?
+        </sql>
     </container>
 </slxlme>

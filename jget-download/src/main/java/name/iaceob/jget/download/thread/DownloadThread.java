@@ -51,6 +51,7 @@ public class DownloadThread implements Runnable {
         try {
             log.info("开始下载 {} , URL: {}", this.fileName, this.url);
             DownloadInfo info = new DownloadInfo(new URL(this.url));
+            JobModel.dao.updateJobSize(this.server, this.job, info.getLength(), this.usr);
             File target = new File(this.file);
             try {
                 api =  new FileDownloadMultithreading();
