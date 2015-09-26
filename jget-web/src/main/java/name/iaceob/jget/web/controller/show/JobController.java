@@ -41,10 +41,4 @@ public class JobController extends Controller {
         super.render("/job/create.html");
     }
 
-
-    public void getJobs() {
-        String cli = super.getPara("cli");
-        List<Record> list = JobModel.dao.getToBeExecJobByCli(cli);
-        super.renderJson("jobs", list);
-    }
 }

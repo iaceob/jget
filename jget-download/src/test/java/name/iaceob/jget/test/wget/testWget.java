@@ -26,7 +26,7 @@ public class testWget {
             URL url = new URL("http://releases.ubuntu.com/14.04.3/ubuntu-14.04.3-desktop-amd64.iso");
             // initialize url information object
 
-            // Runnable notify = new MultithreadDownload(info);
+            // Runnable notify = new FileDownloadMultithreading(info);
 
             Runnable notify = new Runnable() {
                 @Override

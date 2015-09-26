@@ -1,6 +1,8 @@
 
 
 
+
+
 create table j_account(
 id varchar(30) not null,
 name varchar(30) not null,
@@ -47,12 +49,14 @@ comment on column j_job.usr is '任务创建人';
 create table j_job_stat(
 job varchar(30) not null,
 stat varchar(20) not null,
+msg text,
 ctime timestamp default now(),
 primary key(job, ctime)
 );
 comment on table j_job_stat is '任务状态';
 comment on column j_job_stat.job is '任务';
 comment on column j_job_stat.stat is '状态';
+comment on column j_job_stat.msg is '错误信息';
 
 
 create table j_job_progress(
@@ -113,7 +117,7 @@ usr varchar(30) not null,
 cli varchar(30) not null,
 heartbeat timestamp,
 ctime timestamp default now(),
-primary key(usr, cli, ctime);
+primary key(usr, cli, ctime)
 );
 comment on table j_usr_conn is '账户的登录记录表, 主要记录客户机和服务账户连接的信息, 同时可以用作限制相同账户限制登录的数量';
 comment on column j_usr_conn.usr is '账户';
@@ -137,5 +141,10 @@ drop table j_job_progress;
 drop table j_job_cli;
 drop table j_cli;
 drop table j_cli_black;
+drop table j_usr_conn;
 */
+
+
+
+
 

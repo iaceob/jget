@@ -32,12 +32,23 @@ public class JobModel {
         return Db2.update(sql, job, cli)!=0;
     }
 
-    public Boolean saveJobStat(String job, JobStat stat) {
-        String sql = SqlKit.getSql("Job.saveStat");
-        return Db2.update(sql, job, stat.toString())!=0;
+    private Boolean existJobStat(String job, JobStat stat) {
+        String sql = SqlKit.getSql("Job.existJobStat");
+        return Db2.findFirst(sql, job, stat.toString())!=null;
     }
 
-    public Boolean renewProgress(String job, Double progress) {
+    public Boolean saveJobStat(String job, JobStat stat, String msg) {
+        if (this.existJobStat(job, stat)) return true;
+        String sql = SqlKit.getSql("Job.saveStat");
+        return Db2.update(sql, job, stat.toString(), msg)!=0;
+    }
+
+    public Boolean saveJobStat(String job, JobStat stat) {
+        return this.saveJobStat(job, stat, null);
+    }
+
+    // TODO 更新进度会报 org.postgresql.util.PSQLException: ERROR: operator does not exist: character varying = double precision 错误
+    public Boolean renewProgress(String job, double progress) {
         String sql = SqlKit.getSql("Job.renewProgress");
         return Db2.update(sql, job, progress)!=0;
     }

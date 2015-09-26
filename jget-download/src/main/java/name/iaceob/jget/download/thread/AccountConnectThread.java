@@ -39,6 +39,8 @@ public class AccountConnectThread implements Runnable {
                 TimeUnit.DAYS.sleep(this.interval);
             } catch (InterruptedException e) {
                 log.error("账户同步线程休眠失败", e);
+            } catch (RuntimeException e) {
+                log.error("获取 url 失败", e);
             } catch (Exception e) {
                 log.error("账户连接失败", e);
             }

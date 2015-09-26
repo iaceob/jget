@@ -1,8 +1,12 @@
-package name.iaceob.jget.download.execute;
+package name.iaceob.jget.download.thread.download;
 
 import com.github.axet.wget.WGet;
 import com.github.axet.wget.info.DownloadInfo;
+import com.github.axet.wget.info.URLInfo;
 import com.github.axet.wget.info.ex.DownloadMultipartError;
+import name.iaceob.jget.download.common.JobType;
+import name.iaceob.jget.download.kit.CliKit;
+import name.iaceob.jget.download.model.JobModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,31 +16,23 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by iaceob on 2015/9/21.
  */
-public class MultithreadDownload {
+public class FileDownloadMultithreading implements FileDownloadApi {
 
-    private static final Logger log = LoggerFactory.getLogger(MultithreadDownload.class);
+    private static final Logger log = LoggerFactory.getLogger(FileDownloadMultithreading.class);
 
-
-    private String file;
-    private DownloadInfo info;
     private Long last = 0L;
     private AtomicBoolean stop = new AtomicBoolean(false);
 
 
-    public MultithreadDownload(DownloadInfo info, String path, String fileName, String suffix) {
-        this.info = info;
-        path = path.endsWith("/")||path.endsWith("\\") ? path.substring(0, path.length()-1) : path;
-        this.file = path + File.separator + fileName + "." + suffix;
-    }
 
+    @Override
+    public void start(String server, String usr, String job, DownloadInfo info, File file, String cookie, JobType type) throws DownloadMultipartError{
 
-
-    public void start() {
-        try {
-            log.info("开始下载 URL: " + this.info.getSource().toString());
+            log.info("开始下载 URL: {}", info.getSource().toString());
 
             Runnable notify = () -> {
                 Logger log = LoggerFactory.getLogger(this.getClass());
+                JobModel.dao.updateJobStat(server, job, info.getState(), usr);
                 switch (info.getState()) {
                     case EXTRACTING:
                         log.info("Extracting file: " + info.getSource().toString());
@@ -60,30 +56,20 @@ public class MultithreadDownload {
                             if (!p.getState().equals(DownloadInfo.Part.States.DOWNLOADING)) continue;
                             parts += String.format("Part#%d(%.2f) ", p.getNumber(), p.getCount() / (float) p.getLength());
                         }
-                        log.info(String.format("%.2f %s", info.getCount() / (float) info.getLength(), parts));
+                        log.debug("线程进度: {}", parts);
+                        // 实时更新下载进度
+                        JobModel.dao.renewProgress(server, job, info.getCount() / (float) info.getLength(), usr);
                         break;
                     default:
                         break;
-
                 }
             };
 
-            this.info.extract(this.stop, notify);
-            this.info.enableMultipart();
-            File target = new File(this.file);
-            WGet wget = new WGet(this.info, target);
+            info.extract(this.stop, notify);
+            info.enableMultipart();
+            WGet wget = new WGet(info, file);
             wget.download(this.stop, notify);
-        } catch (DownloadMultipartError e) {
-            for (DownloadInfo.Part p : e.getInfo().getParts()) {
-                Throwable ee = p.getException();
-                if (ee != null)
-                    log.error(ee.getMessage(), ee);
-            }
-        } catch (RuntimeException e) {
-            log.error(e.getMessage(), e);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
+
     }
 
 

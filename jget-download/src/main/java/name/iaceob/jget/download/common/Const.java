@@ -8,5 +8,6 @@ public class Const {
 
     public static final String PROPFILE = "conf.properties";
     public static final String HEARTBEATMETHOD = "/cli/heartbeat";
+    public static final String DEFAULTDOWNLOADPATH = "jgetdownload";
 
 }

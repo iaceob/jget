@@ -6,7 +6,7 @@
 
     <groupId>name.iaceob</groupId>
     <artifactId>jget</artifactId>
-    <version>1.2-alpha</version>
+    <version>1.3-beta</version>
     <packaging>pom</packaging>
     <name>jget project</name>
     <description>Jget 网络文件下载服务</description>

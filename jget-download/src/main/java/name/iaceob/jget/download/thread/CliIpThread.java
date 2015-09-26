@@ -30,6 +30,8 @@ public class CliIpThread implements Runnable {
                 TimeUnit.HOURS.sleep(this.interval);
             } catch (InterruptedException e) {
                 log.error("客户机 IP 更新线程休眠失败", e);
+            } catch (RuntimeException e) {
+                log.error("获取 url 失败", e);
             } catch (Exception e) {
                 log.error("客户机 IP 更新失败", e);
             }

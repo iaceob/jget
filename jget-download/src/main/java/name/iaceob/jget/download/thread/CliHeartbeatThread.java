@@ -41,7 +41,7 @@ public class CliHeartbeatThread implements Runnable {
                     continue;
                 }
                 JgetEntity je = CliModel.dao.heartbeatCli(this.server, this.id, this.ip, this.usr);
-                log.info("来自服务端的消息: {}", je.getMsg());
+                log.debug("来自服务端的消息: {}", je.getMsg());
                 if (je.getStat()<0) {
                     log.error("客户机心跳失败");
                     i+=1;
@@ -51,6 +51,9 @@ public class CliHeartbeatThread implements Runnable {
             } catch (InterruptedException e) {
                 i+=1;
                 log.error(e.getMessage(), e);
+            } catch (RuntimeException e) {
+                i+=1;
+                log.error("获取 url 失败", e);
             } catch (Exception e) {
                 i+=1;
                 log.error(e.getMessage(), e);

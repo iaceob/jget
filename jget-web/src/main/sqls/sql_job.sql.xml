@@ -5,7 +5,7 @@
             insert into j_job(id, name, suffix, sz, path, url, type, usr, cookie) values (?,?,?,?,?,?,?,?,?);
         </sql>
         <sql id="saveStat">
-            insert into j_job_stat(job, stat) values (?,?)
+            insert into j_job_stat(job, stat, msg) values (?,?,?)
         </sql>
         <sql id="saveProgress">
             insert into j_job_progress (job, progress) values (?, ?)
@@ -29,12 +29,15 @@
         <sql id="getToBeExecJobByCli">
             select
             j.id, j.name, j.suffix, j.path, j.ctime, j.type,
-            j.cookie /*,jc.cli, vjs.stat*/
+            j.cookie, j.url /*,jc.cli, vjs.stat*/
             from j_job as j
             left join j_job_cli as jc on j.id=jc.job
             left join v_job_stat as vjs on j.id=vjs.job
             where vjs.stat=? and jc.cli=?
             order by j.ctime desc
+        </sql>
+        <sql id="existJobStat">
+            select 1 from j_job_stat where job=? and stat=?
         </sql>
     </container>
 </slxlme>
