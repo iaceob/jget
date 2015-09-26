@@ -45,7 +45,7 @@ public class Jget {
             String cliName = this.conf.get("jget.cli.name", hostName);
             String ip = IpKit.getPublicIp();
             String server = this.conf.getBoolean("jget.server.ssl") ? "https" : "http" + "://" +
-                    this.conf.get("jget.server.host") + ":" + this.conf.get("jget.server.port") +
+                    this.conf.get("jget.server.host", "localhost") + ":" + this.conf.get("jget.server.port", "80") +
                     this.conf.get("jget.server.basepath");
             CliKit.setCliName(cliName);
             CliKit.setIp(ip);
@@ -140,14 +140,14 @@ public class Jget {
 
     public Boolean start() {
         try {
-            this.startCliIpThread(this.conf.getInt("jget.interval.cli_ip"), "ClientIpThread");
+            this.startCliIpThread(this.conf.getInt("jget.interval.cli_ip", 1), "ClientIpThread");
             this.startAccountConnect(this.conf.get("jget.account.name"), this.conf.get("jget.account.passwd"),
-                    this.conf.getInt("jget.interval.account_conn"), "AccountConnectThread");
+                    this.conf.getInt("jget.interval.account_conn", 10), "AccountConnectThread");
             this.startCliHeartbeatThread(CliKit.getServer(), CliKit.getCliId(), CliKit.getIp(), CliKit.getUsr(),
-                    this.conf.getInt("jget.interval.cli_heartbeat"), "CliHeartbeatThread");
+                    this.conf.getInt("jget.interval.cli_heartbeat", 60), "CliHeartbeatThread");
             this.startJobThread(CliKit.getServer(), CliKit.getCliId(), CliKit.getUsr(), "JobThread",
                     this.conf.getInt("jget.thread.job.max_num", Runtime.getRuntime().availableProcessors()*2),
-                    this.conf.getInt("jget.interval.job"), this.getSavePath());
+                    this.conf.getInt("jget.interval.job", 2), this.getSavePath());
             return true;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
