@@ -1,39 +1,38 @@
 #JGET
-        <article>
-            ###本地离线下载服务
-            <p>JGET 的作用就是一个离线下载的程序, 当下载一个非常大的文件时候, 而且本地的网络又很慢, 这时候离线下载
-                就能发挥作用, 各提供离线下载的服务商的做法是将这个大的文件离线到自己的服务器, 然后在从服务商的服务器进行下载;
-                而 JGET 并非如此, 是直接离线到本地.
-        </article>
-        <article>
-            ###准备
-            <p>需要有一台长开的电脑(例如树莓派), 来部署下载程序, 然后在 JGET 的网页中添加这台机器(事实上也无需在网页中添加,
-                在下载程序中配置好机器名, JGET 会自动注册这台机器), 之后就能添加下载的任务了;
-            <p>目前添加的任务仅支持 TCP 链接, 也就是通常浏览器中看到的 URL, 后期考虑支持种子以及磁力链接.
-        </article>
-        <article>
-            ###安装
-            <p>JGET 是使用 JAVA 语言开发, 因此若要成功安装, 需要先安装 JAVA 运行环境 (JRE), <a href="http://java.com" target="_blank">JAVA 官网</a>,
-             JAVA 环境安装完毕后就可以进行部署 JGET.
-            <p>如果你是一名开发着, JGET 是开放程式, 可以使用 GIT 检出代码编译
-            ```language=base
+
+###本地离线下载服务
+>JGET 的作用就是一个离线下载的程序, 当下载一个非常大的文件时候, 而且本地的网络又很慢, 这时候离线下载
+    就能发挥作用, 各提供离线下载的服务商的做法是将这个大的文件离线到自己的服务器, 然后在从服务商的服务器进行下载;
+    而 JGET 并非如此, 是直接离线到本地.
+    
+###准备
+>需要有一台长开的电脑(例如树莓派), 来部署下载程序, 然后在 JGET 的网页中添加这台机器(事实上也无需在网页中添加,
+    在下载程序中配置好机器名, JGET 会自动注册这台机器), 之后就能添加下载的任务了;
+>目前添加的任务仅支持 TCP 链接, 也就是通常浏览器中看到的 URL, 后期考虑支持种子以及磁力链接.
+
+###安装
+>JGET 是使用 JAVA 语言开发, 因此若要成功安装, 需要先安装 JAVA 运行环境 (JRE), <a href="http://java.com" target="_blank">JAVA 官网</a>,
+ JAVA 环境安装完毕后就可以进行部署 JGET.
+>如果你是一名开发着, JGET 是开放程式, 可以使用 GIT 检出代码编译
+```language=base
 ~$ git clone http://xx
 ~$ cd jget
 ~$ mvn clean package```
-            <p>打包后会有 jget-download/target/jget-download*.tar.gz 这个文件, 这个便是下载程式.
-            <p>之后解压这个压缩包会有三个目录  bin conf lib
-            <p>bin 目录下存放的便是启动程序
-            <p>conf 存放的是配置文件
-            <p>lib 资料
-            <p>启动程序执行 bin/jget.sh start 即可, 可选 stop 停止
-            ```
-~$ bin/jget.sh start```
-        </article>
-        <article>
-            ###配置
-            <p>下载程序的配置文件在 conf/conf.properties, 详细说明如下:
-            ```
-            ##### 这是 JGET 的相关信息无需关注
+>打包后会有 jget-download/target/jget-download*.tar.gz 这个文件, 这个便是下载程式.
+>之后解压这个压缩包会有三个目录  bin conf lib
+>bin 目录下存放的便是启动程序
+>conf 存放的是配置文件
+>lib 资料
+>启动程序执行 bin/jget.sh start 即可, 可选 stop 停止
+    
+```
+~$ bin/jget.sh start
+```
+
+###配置
+>下载程序的配置文件在 conf/conf.properties, 详细说明如下:
+```
+##### 这是 JGET 的相关信息无需关注
 jget.version = 1.0
 jget.dev = true
 
@@ -70,6 +69,7 @@ jget.interval.job = 2
 jget.thread.job.max_num = 8
 
 ### 下载文件保存的路径 \${user.home} 表示当前系统登入用户的主目录
-jget.download.path = \${user.home}/jget```
-        </article>
+jget.download.path = \${user.home}/jget
+```
+
         
