@@ -16,10 +16,7 @@ import name.iaceob.jget.web.common.Const;
 import name.iaceob.jget.web.controller.post.AccountPostController;
 import name.iaceob.jget.web.controller.post.CliPostController;
 import name.iaceob.jget.web.controller.post.JobPostController;
-import name.iaceob.jget.web.controller.show.AccountController;
-import name.iaceob.jget.web.controller.show.CliController;
-import name.iaceob.jget.web.controller.show.IndexController;
-import name.iaceob.jget.web.controller.show.JobController;
+import name.iaceob.jget.web.controller.show.*;
 import name.iaceob.jget.web.factory.BeetlFactory;
 import name.iaceob.jget.web.handler.AccountHandler;
 import name.iaceob.jget.web.handler.BasePathHandler;
@@ -64,6 +61,7 @@ public class AppConfig extends JFinalConfig {
         routes.add("/account", AccountController.class);
         routes.add("/cli", CliController.class);
         routes.add("/job", JobController.class);
+        routes.add("/about", AboutController.class);
 
 
         routes.add("/post/cli", CliPostController.class);

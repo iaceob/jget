@@ -17,6 +17,8 @@
                 dataType: 'json'
             }).done(function (data) {
                 console.log(data);
+                if (data.stat<0) alert(data.msg);
+                if (data.stat>=0) window.location.href = basePath + '/job';
             });
             return false;
         });

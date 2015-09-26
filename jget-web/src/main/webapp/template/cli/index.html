@@ -17,6 +17,7 @@
                 dataType: 'json'
             }).done(function(data){
                 console.log(data);
+                if (data.stat>0) window.location.reload();
             });
             return false;
         });

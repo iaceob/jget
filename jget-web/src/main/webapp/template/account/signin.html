@@ -1,7 +1,23 @@
-<!--@var title={-->Sign In<!--@};-->
+<!--@var title={-->登入 JGET<!--@};-->
 
 <!--@var header={-->
-
+<style type="text/css">
+    body {
+        background-color: #DADADA;
+    }
+    body > .grid {
+        height: 100%;
+    }
+    .image {
+        margin-top: -100px;
+    }
+    .column {
+        max-width: 450px;
+    }
+    .container {
+        margin-top: 5px;
+    }
+</style>
 <!--@};-->
 
 <!--@var footer={-->
@@ -15,7 +31,8 @@
                 data: $(this).serialize(),
                 dataType: 'json'
             }).done(function (data) {
-                console.log(data);
+                $('.message').html(data.msg);
+                if (data.stat>=0) window.location.href = basePath + "/";
             });
             return false;
         });
@@ -24,21 +41,43 @@
 <!--@};-->
 
 <!--@var container={-->
-<div>
-    <form id="signform" method="post" autocomplete="off">
-        <div>
-            <label for="name">帐号</label>
-            <input name="name" id="name" type="text" placeholder="账号" />
+
+
+
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <h2 class="ui teal image header">
+            <div class="content">
+                登入 JGET
+            </div>
+        </h2>
+        <form class="ui large form" id="signform">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="name" placeholder="账户">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="passwd" placeholder="密码">
+                    </div>
+                </div>
+                <button class="ui fluid large teal submit button">登入</button>
+            </div>
+
+            <div class="ui error message"></div>
+
+        </form>
+
+        <div class="ui message">
+            没有账户? <a href="${basePath}/account/reg">立即注册</a>
         </div>
-        <div>
-            <label for="passwd">密码</label>
-            <input name="passwd" id="passwd" type="password" placeholder="密码" />
-        </div>
-        <div>
-            <button>登陆</button>
-        </div>
-    </form>
+    </div>
 </div>
+
 <!--@};-->
 
-<!--@include("/layout/layout_default.html", {title: title, header: header, container: container, footer: footer}){}-->
+<!--@include("/layout/layout_account.html", {title: title, header: header, container: container, footer: footer}){}-->

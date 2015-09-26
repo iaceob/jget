@@ -12,24 +12,9 @@
 ${header}
 </head>
 <body>
-<header>
-<p><a href="${basePath}/">home</a>
-<!--@
-if (usr.id!''!='') {
--->
-<p><strong>${usr.name}</strong>
-<a href="${basePath}/account/out?u=${usr.name}&amp;i=${usr.id}">退出</a>
-<!--@
-} else {
--->
-<p><a href="${basePath}/account/reg">reg</a>
-<p><a href="${basePath}/account/signin">signin</a>
-<!--@ } -->
-</header>
-<div class="container">${container}</div>
-<footer>
 
-</footer>
+<div class="container">${container}</div>
+
 <script>var basePath='${basePath}', resPath='${resPath}';</script>
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.js"></script>
 <script src="//cdn.bootcss.com/semantic-ui/2.1.4/semantic.min.js"></script>
