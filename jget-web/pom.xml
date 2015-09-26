@@ -49,7 +49,6 @@
                     <packagingExcludes>
                         WEB-INF/lib/jetty*.jar,
                         WEB-INF/lib/javax.servlet*.jar,
-                        WEB-INF/lib/antlr4-*.jar,
                         WEB-INF/lib/commons-lang3*.jar,
                         WEB-INF/lib/org.abego.treelayout*.jar
                     </packagingExcludes>

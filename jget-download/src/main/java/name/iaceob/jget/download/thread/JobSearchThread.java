@@ -61,13 +61,13 @@ public class JobSearchThread implements Runnable {
                 TimeUnit.MINUTES.sleep(this.interval);
             } catch (InterruptedException e) {
                 i+=1;
-                log.error("任务获取线程休眠失败", e);
+                log.error("任务获取线程休眠失败; {}", e.getMessage());
             } catch (RuntimeException e) {
                 i+=1;
-                log.error("获取 url 失败", e);
+                log.error("获取 url 失败; {}", e.getMessage());
             } catch (Exception e) {
                 i+=1;
-                log.error("获取任务失败; " + e.getMessage(), e);
+                log.error("获取任务失败; {}",e.getMessage());
             }
         }
     }

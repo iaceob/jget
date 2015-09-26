@@ -4,6 +4,7 @@ import com.github.axet.wget.WGet;
 import com.github.axet.wget.info.DownloadInfo;
 import com.github.axet.wget.info.ex.DownloadMultipartError;
 import name.iaceob.jget.download.common.JobType;
+import name.iaceob.jget.download.model.JobModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,7 @@ public class FileDownloadThread implements FileDownloadApi {
     public void start(String server, String usr, String job, DownloadInfo info, File file, String cookie, JobType type) throws DownloadMultipartError {
 
         info.extract();
+        JobModel.dao.updateJobSize(server, job, info.getLength(), usr);
         WGet w = new WGet(info, file);
         w.download();
 
