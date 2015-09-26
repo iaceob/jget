@@ -16,9 +16,10 @@
 >如果你是一名开发着, JGET 是开放程式, 可以使用 GIT 检出代码编译
 
 ```language=base
->~$ git clone http://xx
->~$ cd jget
->~$ mvn clean package```
+~$ git clone http://xx
+~$ cd jget
+~$ mvn clean package
+```
 
 >打包后会有 jget-download/target/jget-download*.tar.gz 这个文件, 这个便是下载程式.
 >之后解压这个压缩包会有三个目录  bin conf lib
@@ -33,44 +34,45 @@
 
 ###配置
 >下载程序的配置文件在 conf/conf.properties, 详细说明如下:
+
 ```
-\##### 这是 JGET 的相关信息无需关注
+##### 这是 JGET 的相关信息无需关注
 jget.version = 1.0
 jget.dev = true
 
-\### 必须配置, 否则 JGET 无法获取到下载任务
-\### 配置这个下载机所使用的 WEB 任务管理信息
-\# 是否 SSL 协议
+### 必须配置, 否则 JGET 无法获取到下载任务
+### 配置这个下载机所使用的 WEB 任务管理信息
+# 是否 SSL 协议
 jget.server.ssl = false
-\# 服务器域名 不填写默认 localhost
+# 服务器域名 不填写默认 localhost
 jget.server.host = localhost
-\# 服务器端口 不填写默认 80
+# 服务器端口 不填写默认 80
 jget.server.port = 8120
-\# 服务所在的路径, 默认是空表示在根目录
+# 服务所在的路径, 默认是空表示在根目录
 jget.server.basepath =
 
-\### 必填 账户配置 这个很重要
-\# web 服务中注册的账户
+### 必填 账户配置 这个很重要
+# web 服务中注册的账户
 jget.account.name = test
-\# web 服务中账户的密码
+# web 服务中账户的密码
 jget.account.passwd = 0
 
-\#### 下载机名 如果不配置默认将获取机器名称
+#### 下载机名 如果不配置默认将获取机器名称
 jget.cli.name = Test
 
-\##### 程序执行的相关配置 通常无需更改, 设置的过高会影响效能, 这里看到的值都是默认配置
-\# 客户机 ip 更新间隔时间 单位 小时
+##### 程序执行的相关配置 通常无需更改, 设置的过高会影响效能, 这里看到的值都是默认配置
+# 客户机 ip 更新间隔时间 单位 小时
 jget.interval.cli_ip = 1
-\# 账户连接更新间隔时间 单位 天
+# 账户连接更新间隔时间 单位 天
 jget.interval.account_conn = 10
-\# 客户机心跳间隔时间 单位 秒
+# 客户机心跳间隔时间 单位 秒
 jget.interval.cli_heartbeat = 60
-\# 任务读取间隔 单位 分
+# 任务读取间隔 单位 分
 jget.interval.job = 2
-\# 同时下载的最大数量, 不建议设置的过高, 不填写默认是 CPU 数的 2 倍
+# 同时下载的最大数量, 不建议设置的过高, 不填写默认是 CPU 数的 2 倍
 jget.thread.job.max_num = 8
 
-\### 下载文件保存的路径 \${user.home} 表示当前系统登入用户的主目录
+### 下载文件保存的路径 \${user.home} 表示当前系统登入用户的主目录
 jget.download.path = \${user.home}/jget
 ```
 
