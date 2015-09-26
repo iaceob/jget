@@ -73,7 +73,7 @@ jget.interval.job = 2
 jget.thread.job.max_num = 8
 
 ### 下载文件保存的路径 ${user.home} 表示当前系统登入用户的主目录
-jget.download.path = ${user.home}/jget
+jget.download.path = ${user.home}/jgetdownload
 ```
 
         
