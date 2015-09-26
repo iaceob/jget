@@ -44,7 +44,7 @@ public class Jget {
 
             String cliName = this.conf.get("jget.cli.name", hostName);
             String ip = IpKit.getPublicIp();
-            String server = this.conf.getBoolean("jget.server.ssl") ? "https" : "http" + "://" +
+            String server = this.conf.getBoolean("jget.server.ssl", false) ? "https" : "http" + "://" +
                     this.conf.get("jget.server.host", "localhost") + ":" + this.conf.get("jget.server.port", "80") +
                     this.conf.get("jget.server.basepath");
             CliKit.setCliName(cliName);
