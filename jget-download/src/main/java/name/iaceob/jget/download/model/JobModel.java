@@ -46,6 +46,7 @@ public class JobModel {
         paras.put("progress", progress.toString());
         HttpEntity he = HttpKit.get(server + "/post/job/renew_progress", paras, header);
         JgetEntity je = JsonKit.fromJson(he.getHtml(), JgetEntity.class);
+        log.debug(je.getMsg());
         return je.getStat()>0;
     }
 
@@ -57,6 +58,7 @@ public class JobModel {
         paras.put("stat", stat.toString());
         HttpEntity he = HttpKit.get(server + "/post/job/update_stat", paras, header);
         JgetEntity je = JsonKit.fromJson(he.getHtml(), JgetEntity.class);
+        log.debug(je.getMsg());
         return je.getStat()>0;
     }
 
@@ -81,6 +83,7 @@ public class JobModel {
         paras.put("size", size.toString());
         HttpEntity he = HttpKit.get(server + "/post/job/update_job_size", paras, header);
         JgetEntity je = JsonKit.fromJson(he.getHtml(), JgetEntity.class);
+        log.debug(je.getMsg());
         return je.getStat()>0;
     }
 

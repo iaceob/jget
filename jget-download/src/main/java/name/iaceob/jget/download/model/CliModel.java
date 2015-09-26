@@ -27,6 +27,7 @@ public class CliModel {
         HttpEntity he = HttpKit.post(server + "/post/cli/register", data, header);
         log.debug(he.getHtml().trim());
         JgetEntity je = JsonKit.fromJson(he.getHtml(), JgetEntity.class);
+        log.debug(je.getMsg());
         return je;
     }
 
@@ -37,6 +38,7 @@ public class CliModel {
         HttpEntity he = HttpKit.post(server + "/post/cli/heartbeat", data, header);
         log.debug(he.getHtml().trim());
         JgetEntity je = JsonKit.fromJson(he.getHtml(), JgetEntity.class);
+        log.debug(je.getMsg());
         return je;
     }
 
