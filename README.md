@@ -15,7 +15,7 @@
 >JAVA 环境安装完毕后就可以进行部署 JGET.
 >如果你是一名开发着, JGET 是开放程式, 可以使用 GIT 检出代码编译
 
-```language=base
+```language=bash
 ~$ git clone http://xx
 ~$ cd jget
 ~$ mvn clean package
@@ -28,14 +28,14 @@
 >lib 资料
 >启动程序执行 bin/jget.sh start 即可, 可选 stop 停止
     
-```
+```language=bash
 ~$ bin/jget.sh start
 ```
 
 ###配置
 >下载程序的配置文件在 conf/conf.properties, 详细说明如下:
 
-```
+```language=bash
 ##### 这是 JGET 的相关信息无需关注
 jget.version = 1.0
 jget.dev = true
