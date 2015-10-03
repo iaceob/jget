@@ -9,10 +9,6 @@
     $(document).ready(function () {
         'use strict';
 
-        $('#myDropdown').on('show.bs.dropdown', function () {
-            // do something…
-        })
-
         $('#newjobform').bind('submit', function(){
             $.ajax({
                 url: basePath + '/post/job/create',
@@ -27,80 +23,56 @@
             return false;
         });
 
-        $('#create').on('submit', function(){
-            var obj = $("#opt input[text]");
-            for(var a=0;a<obj.length;a++){
-                obj.getAttribute("name");
-            }
-            obj.serialize();
-            $.ajax({
-                url: basePath + '/post/job/create',
-                type: 'post',
-                data: obj.serialize(),
-                dataType: 'json'
-            }).done(function (data) {
-                console.log(data);
-                if (data.stat<0) alert(data.msg);
-                if (data.stat>=0) window.location.href = basePath + '/job';
-            });
-            return false;
-        });
     });
 </script>
 <!--@};-->
 
 <!--@var container={-->
-<div id="opt">
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">URL</span>
-        <input type="text" class="form-control" placeholder="url" aria-describedby="basic-addon1" id="url" name="url">
-    </div>
-    <br/>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon2">Name</span>
-        <input type="text" class="form-control" placeholder="file name" aria-describedby="basic-addon1" id="name" name="name">
-    </div>
-    <br/>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon3">Suffix</span>
-        <input type="text" class="form-control" placeholder="file suffix" aria-describedby="basic-addon1" id="suffix" name="suffix">
-    </div>
-    <br/>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon4">Path</span>
-        <input type="text" class="form-control" placeholder="file path" aria-describedby="basic-addon1" id="path" name="path" value="download">
-    </div>
-    <br/>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon5">Cookie</span>
-        <input type="text" class="form-control" placeholder="cookie" aria-describedby="basic-addon1" name="cookie" id="cookie">
-    </div>
-    <br/>
-    <div>
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Please selector client
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <!--@
-                for(var i=0; i<clis.~size; i++) {
-                -->
-                <li><a value="${clis[i].id}" href="#">${clis[i].name} -- ${clis[i].ip}</a></li>
-                <!--@
-                }
-                -->
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li><a href="#">Separated link</a></li>
-            </ul>
+<div>
+    <form id="newjobform" autocomplete="off" class="form-interval">
+        <label for="url" hidden></label>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">URL</span>
+            <input type="text" class="form-control" placeholder="url" aria-describedby="basic-addon1" id="url" name="url"/>
         </div>
-    </div>
-    <input type="hidden" name="type" value="1"/>
-    <br/>
-    <div class="btn-seat-box">
-        <button type="button" class="btn-seat btn btn-default btn-seat" id="create">New Create</button>
-    </div>
+        <label for="name" hidden></label>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Name</span>
+            <input type="text" class="form-control" placeholder="file name" aria-describedby="basic-addon1" id="name" name="name"/>
+        </div>
+        <label for="suffix" hidden></label>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3">Suffix</span>
+            <input type="text" class="form-control" placeholder="file suffix" aria-describedby="basic-addon1" id="suffix" name="suffix">
+        </div>
+        <label for="path" hidden></label>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon4">Path</span>
+            <input type="text" class="form-control" placeholder="file path" aria-describedby="basic-addon1" id="path" name="path" value="download">
+        </div>
+        <label for="cookie" hidden></label>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon5">Cookie</span>
+            <input type="text" class="form-control" placeholder="cookie" aria-describedby="basic-addon1" name="cookie" id="cookie">
+        </div>
+        <div>
+            <label for="cli" hidden></label>
+            <select name="cli" id="cli" class="form-control" >
+                <option data-style="header">Please selector client
+                    <!--@
+                    for(var i=0; i<clis.~size; i++) {
+                    -->
+                <option value="${clis[i].id}">${clis[i].name} -- ${clis[i].ip}</option>
+                    <!--@
+                    }
+                    -->
+            </select>
+        </div>
+        <div class="btn-seat-box">
+            <button class="btn-seat btn btn-default" id="create">New Create</button>
+        </div>
+        <input type="hidden" name="type" value="1"/>
+    </form>
 </div>
 <!--@};-->
 

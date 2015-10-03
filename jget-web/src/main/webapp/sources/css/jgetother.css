@@ -1,14 +1,15 @@
+/*任务列表*/
 .table{
     line-height: 8px;
     table-layout: fixed
 }
-.url-long{
+.long-ovar{
     white-space:nowrap;
     text-overflow :ellipsis;
     overflow:hidden;
     height:inherit;
 }
-.url-long:active{
+.long-ovar:active{
     white-space:normal;
     overflow:visible;
 
@@ -16,6 +17,8 @@
     word-break: normal;
     height:inherit;
 }
+
+/*新建任务页面*/
 .btn-seat-box{
 border-top-color: rgb(238, 238, 238);
 border-top-style: solid;
@@ -25,4 +28,10 @@ box-sizing: border-box;
 }
 .btn-seat{
     float: right;
+}
+
+/*分页*/
+.page-box{
+    margin: 0px auto;
+    text-align: center;
 }

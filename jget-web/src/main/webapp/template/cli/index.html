@@ -9,11 +9,11 @@
     $(document).ready(function () {
        'use strict';
 
-        $('#registercliform').bind('submit', function () {
+        $('#saveClent').click(function () {
             $.ajax({
                 url: basePath + "/post/cli/register",
                 type: 'post',
-                data: $(this).serialize(),
+                data: $('#registercliform').serialize(),
                 dataType: 'json'
             }).done(function(data){
                 console.log(data);
@@ -22,40 +22,74 @@
             return false;
         });
 
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     });
 </script>
 <!--@};-->
 
 <!--@var container={-->
 <div>
-    <form id="registercliform" autocomplete="off">
-        <div>
-            <label for="name">name</label>
-            <input type="text" id="name" name="name"/>
-            <span>此项非常重要, 这个名称必须和下载终端中的 name 相同, 如果下载终端中没有配置 name 则默认提取下载终端的机器名称</span>
-        </div>
-        <div>
-            <label for="ip">ip</label>
-            <input type="text" id="ip" name="ip" value="0.0.0.0" readonly />
-            <span>此项可不用更改, ip 会在下载机的心跳中进行更新</span>
-        </div>
-        <div>
-            <button>Create</button>
-        </div>
-    </form>
+    <button type="button" data-toggle="modal" data-target="#newClient" class="btn btn-default">Create Client</button>
+    <div id="newClient" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Create new Client</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="registercliform" autocomplete="off" class="form-interval">
+                        <label for="name" hidden></label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1" data-toggle="tooltip" data-placement="top" title="此项非常重要, 这个名称必须和下载终端中的 name 相同, 如果下载终端中没有配置 name 则默认提取下载终端的机器名称">Name</span>
+                            <input type="text" class="form-control" placeholder="client name" aria-describedby="basic-addon1" id="name" name="name">
+                        </div>
+                        <label for="ip" hidden></label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon2"  data-toggle="tooltip" data-placement="top" title="此项可不用更改, ip 会在下载机的心跳中进行更新">IP</span>
+                            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="ip" name="ip" value="0.0.0.0">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="saveClent" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
+<br/>
 <div>
     <!--@
     for(var i=0; i<clis.~size; i++) {
     -->
-    <section style="border-bottom: 1px solid #333">
-        <p><strong>id:</strong> ${clis[i].id}
-        <p><strong>name:</strong> ${clis[i].name}
-        <p><strong>ip:</strong> ${clis[i].ip}
-        <p><strong>heartbeat:</strong> ${clis[i].heartbeat, dateFormat='yyyy-MM-dd HH:mm:ss'}
-        <p><strong>expired:</strong> ${clis[i].expired}
-        <p><strong>ctime:</strong> ${clis[i].ctime, dateFormat='yyyy-MM-dd HH:mm:ss'}
-    </section>
+    <li class="list-group-item">
+        <div class="panel panel-default">
+            <div class="panel-heading">${clis[i].name}--- ${clis[i].ip}</div>
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <td width="65px">id:</td>
+                        <td class="url-long">${clis[i].id}</td>
+                    </tr>
+                    <tr>
+                        <td>heartbeat:</td>
+                        <td>${clis[i].heartbeat, dateFormat='yyyy-MM-dd HH:mm:ss'}</td>
+                    </tr>
+                    <tr>
+                        <td>expired:</td>
+                        <td>${clis[i].expired}</td>
+                    </tr>
+                    <tr>
+                        <td>ctime:</td>
+                        <td>${clis[i].ctime, dateFormat='yyyy-MM-dd HH:mm:ss'}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     <!--@
     }
     -->

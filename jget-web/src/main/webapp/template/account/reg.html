@@ -42,43 +42,30 @@
 
 <!--@var container={-->
 
-<div class="ui middle aligned center aligned grid">
-    <div class="column">
-        <h2 class="ui teal image header">
-            <div class="content">
-                加入 JGET
-            </div>
-        </h2>
-        <form class="ui large form" id="regform">
-            <div class="ui stacked segment">
-                <div class="field">
-                    <div class="ui left icon input">
-                        <i class="user icon"></i>
-                        <input type="text" name="name" placeholder="账户">
-                    </div>
+    <div class="panel panel-primary jget-panel panel-signin">
+        <div class="panel-heading">加入 JGET</div>
+        <div class="panel-body">
+            <form id="regform" class="form-interval form-signin">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">Name</span>
+                    <input type="text" class="form-control" placeholder="User name" aria-describedby="basic-addon1" name="name">
                 </div>
-                <div class="field">
-                    <div class="ui left icon input">
-                        <i class="mail icon"></i>
-                        <input type="text" name="email" placeholder="邮箱">
-                    </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon4">Mail</span>
+                    <input type="text" class="form-control" placeholder="Email addrees" aria-describedby="basic-addon1" name="email">
                 </div>
-                <div class="field">
-                    <div class="ui left icon input">
-                        <i class="lock icon"></i>
-                        <input type="password" name="passwd" placeholder="密码">
-                    </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon5">Passwd</span>
+                    <input type="text" class="form-control" placeholder="User password" aria-describedby="basic-addon1"name="passwd">
                 </div>
-                <button class="ui fluid large teal submit button">加入</button>
-            </div>
-
-            <div class="ui error message"></div>
-
-        </form>
-
-        <div class="ui message">
-             <a href="${basePath}/account/signin">登入</a>
+                <div class="btn-seat-box">
+                    <button class="btn btn-default" type="button" onclick="window.location.href='/account/signin'">登入</button>
+                    <button class="btn-seat btn btn-default">加入</button>
+                </div>
+            </form>
         </div>
+    </div>
+
     </div>
 </div>
 

@@ -103,3 +103,28 @@ body {
     display: inline-block;
     border-radius: 50%;
 }
+
+.panel-signin{
+    max-width: 400px;
+    margin: 0px auto;
+}
+
+/*表单*/
+.form-signin{
+    max-width: 330px;
+    padding: 15px;
+    margin: 0px auto;
+}
+
+.form-interval .input-group{
+    margin: 10px auto;
+}
+
+.form-signin button{
+    margin: 10px auto;
+}
+
+.form-signin .message{
+    text-align: right;
+    margin: 10px auto;
+}

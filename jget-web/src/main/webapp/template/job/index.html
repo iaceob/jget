@@ -10,7 +10,7 @@
 
 <!--@var container={-->
 <div>
-    <button type="button" class="btn btn-default" onclick="window.location.href='${basePath}/job/create';">Create</button>
+    <button type="button" class="btn btn-default" onclick="window.location.href='${basePath}/job/create';">Create Job</button>
 </div>
 <br/>
 <div>
@@ -25,11 +25,11 @@
                     <table class="table">
                         <tr>
                             <td width="65px">url:</td>
-                            <td class="url-long">${p.list[i].url}</td>
+                            <td class="long-ovar">${p.list[i].url}</td>
                         </tr>
                         <tr>
                             <td>cookie:</td>
-                            <td>${p.list[i].cookie}</td>
+                            <td  class="long-ovar">${p.list[i].cookie}</td>
                         </tr>
                         <tr>
                             <td>path:</td>
@@ -52,7 +52,25 @@
     </li>
 </ul>
 </div>
-${pagination(request, p.totalRow, p.totalPage, p.pageNumber, p.pageSize, 'page')}
+<nav class="page-box">
+    <ul class="pagination">
+        <li>
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 <!--@};-->
 
 <!--@include("/layout/layout_default.html", {title: title, header: header, container: container, footer: footer}){}-->
