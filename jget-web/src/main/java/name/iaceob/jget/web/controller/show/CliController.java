@@ -17,11 +17,12 @@ import java.util.List;
  * Created by cox on 2015/9/22.
  */
 public class CliController extends Controller {
-
+    String tit = "下载机";
 
     public void index() {
         List<Record> clis = CliModel.dao.getClis(AccountKit.getId(), PropKit.use(Const.PROPFILE).getInt("pro.cli.time.expired"));
         super.setAttr("clis", clis);
+        super.setAttr("tit", tit);
         super.render("/cli/index.html");
     }
 

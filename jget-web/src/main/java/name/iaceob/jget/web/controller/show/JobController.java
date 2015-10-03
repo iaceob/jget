@@ -20,7 +20,7 @@ import java.util.List;
 public class JobController extends Controller {
 
     private static final Logger log = LoggerFactory.getLogger(JobController.class);
-
+        String tit = "任务";
 
     public void index() {
         JobStat[] stats = JobStat.values();
@@ -32,12 +32,14 @@ public class JobController extends Controller {
         }
         Page<Record> pr = JobModel.dao.getPageJob(stats, super.getParaToInt(Const.PAGEPARA, 1), Const.PAGESIZE);
         super.setAttr("p", pr);
+        super.setAttr("tit", tit);
         super.render("/job/index.html");
     }
 
     public void create() {
         List<Record> clis = CliModel.dao.getUsabledClis(AccountKit.getId(), PropKit.use(Const.PROPFILE).getInt("pro.cli.time.expired"));
         super.setAttr("clis", clis);
+        super.setAttr("tit", tit);
         super.render("/job/create.html");
     }
 

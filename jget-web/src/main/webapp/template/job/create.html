@@ -9,6 +9,10 @@
     $(document).ready(function () {
         'use strict';
 
+        $('#myDropdown').on('show.bs.dropdown', function () {
+            // do something…
+        })
+
         $('#newjobform').bind('submit', function(){
             $.ajax({
                 url: basePath + '/post/job/create',
@@ -23,51 +27,80 @@
             return false;
         });
 
+        $('#create').on('submit', function(){
+            var obj = $("#opt input[text]");
+            for(var a=0;a<obj.length;a++){
+                obj.getAttribute("name");
+            }
+            obj.serialize();
+            $.ajax({
+                url: basePath + '/post/job/create',
+                type: 'post',
+                data: obj.serialize(),
+                dataType: 'json'
+            }).done(function (data) {
+                console.log(data);
+                if (data.stat<0) alert(data.msg);
+                if (data.stat>=0) window.location.href = basePath + '/job';
+            });
+            return false;
+        });
     });
 </script>
 <!--@};-->
 
 <!--@var container={-->
-<div>
-    <form id="newjobform" autocomplete="off">
-        <div>
-            <label for="url">url</label>
-            <input type="text" id="url" name="url"/>
-        </div>
-        <div>
-            <label for="name">name</label>
-            <input type="text" id="name" name="name"/>
-        </div>
-        <div>
-            <label for="suffix">suffix</label>
-            <input type="text" id="suffix" name="suffix"/>
-        </div>
-        <div>
-            <label for="path">path</label>
-            <input type="text" id="path" name="path" value="download"/>
-        </div>
-        <div>
-            <label for="cli">cli</label>
-            <select name="cli" id="cli">
-                <option value="">Please selector
+<div id="opt">
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">URL</span>
+        <input type="text" class="form-control" placeholder="url" aria-describedby="basic-addon1" id="url" name="url">
+    </div>
+    <br/>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon2">Name</span>
+        <input type="text" class="form-control" placeholder="file name" aria-describedby="basic-addon1" id="name" name="name">
+    </div>
+    <br/>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon3">Suffix</span>
+        <input type="text" class="form-control" placeholder="file suffix" aria-describedby="basic-addon1" id="suffix" name="suffix">
+    </div>
+    <br/>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon4">Path</span>
+        <input type="text" class="form-control" placeholder="file path" aria-describedby="basic-addon1" id="path" name="path" value="download">
+    </div>
+    <br/>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon5">Cookie</span>
+        <input type="text" class="form-control" placeholder="cookie" aria-describedby="basic-addon1" name="cookie" id="cookie">
+    </div>
+    <br/>
+    <div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Please selector client
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <!--@
                 for(var i=0; i<clis.~size; i++) {
                 -->
-                <option value="${clis[i].id}">${clis[i].name} -- ${clis[i].ip}
+                <li><a value="${clis[i].id}" href="#">${clis[i].name} -- ${clis[i].ip}</a></li>
                 <!--@
                 }
                 -->
-            </select>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>
         </div>
-        <div>
-            <label for="cookie">cookie</label>
-            <textarea name="cookie" id="cookie"></textarea>
-        </div>
-        <div>
-            <button>Create</button>
-        </div>
-        <input type="hidden" name="type" value="1"/>
-    </form>
+    </div>
+    <input type="hidden" name="type" value="1"/>
+    <br/>
+    <div class="btn-seat-box">
+        <button type="button" class="btn-seat btn btn-default btn-seat" id="create">New Create</button>
+    </div>
 </div>
 <!--@};-->
 

@@ -42,41 +42,25 @@
 
 <!--@var container={-->
 
-
-
-<div class="ui middle aligned center aligned grid">
-    <div class="column">
-        <h2 class="ui teal image header">
-            <div class="content">
-                登入 JGET
-            </div>
-        </h2>
-        <form class="ui large form" id="signform">
-            <div class="ui stacked segment">
-                <div class="field">
-                    <div class="ui left icon input">
-                        <i class="user icon"></i>
-                        <input type="text" name="name" placeholder="账户">
-                    </div>
+    <div class="panel panel-primary jget-panel">
+        <div class="panel-heading">Please sign in</div>
+        <div class="panel-body">
+            <form class="form-signin" id="signform">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">#</span>
+                    <input type="text" class="form-control" placeholder="Username" name="name" aria-describedby="basic-addon1">
                 </div>
-                <div class="field">
-                    <div class="ui left icon input">
-                        <i class="lock icon"></i>
-                        <input type="password" name="passwd" placeholder="密码">
-                    </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon2">?</span>
+                    <input type="password" class="form-control" placeholder="Password" name="passwd" aria-describedby="basic-addon1">
                 </div>
-                <button class="ui fluid large teal submit button">登入</button>
-            </div>
-
-            <div class="ui error message"></div>
-
-        </form>
-
-        <div class="ui message">
-            <a href="${basePath}/account/reg">加入 JGET</a>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <div class="message">
+                    <a href="${basePath}/account/reg">加入 JGET</a>
+                </div>
+            </form>
         </div>
     </div>
-</div>
 
 <!--@};-->
 

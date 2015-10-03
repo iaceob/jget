@@ -1,0 +1,28 @@
+.table{
+    line-height: 8px;
+    table-layout: fixed
+}
+.url-long{
+    white-space:nowrap;
+    text-overflow :ellipsis;
+    overflow:hidden;
+    height:inherit;
+}
+.url-long:active{
+    white-space:normal;
+    overflow:visible;
+
+    word-wrap: break-word;
+    word-break: normal;
+    height:inherit;
+}
+.btn-seat-box{
+border-top-color: rgb(238, 238, 238);
+border-top-style: solid;
+border-top-width: 1px;
+padding-top: 9px;
+box-sizing: border-box;
+}
+.btn-seat{
+    float: right;
+}

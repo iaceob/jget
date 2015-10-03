@@ -10,23 +10,47 @@
 
 <!--@var container={-->
 <div>
-    <p><a href="${basePath}/job/create">create</a>
+    <button type="button" class="btn btn-default" onclick="window.location.href='${basePath}/job/create';">Create</button>
 </div>
+<br/>
 <div>
+<ul class="list-group">
     <!--@
     for(var i=0; i<p.list.~size; i++) {
     -->
-    <section style="border-bottom: 1px solid #333">
-        <p><strong>url:</strong> ${p.list[i].url}
-        <p><strong>cookie:</strong> ${p.list[i].cookie}
-        <p><strong>path:</strong> ${p.list[i].path}
-        <p><strong>save file:</strong> ${p.list[i].name}.${p.list[i].suffix}
-        <p><strong>type:</strong> ${p.list[i].type}
-        <p><strong>stat:</strong> ${p.list[i].stat}
-    </section>
+        <li class="list-group-item">
+            <div class="panel panel-default">
+                <div class="panel-heading">${p.list[i].name}.${p.list[i].suffix}</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <td width="65px">url:</td>
+                            <td class="url-long">${p.list[i].url}</td>
+                        </tr>
+                        <tr>
+                            <td>cookie:</td>
+                            <td>${p.list[i].cookie}</td>
+                        </tr>
+                        <tr>
+                            <td>path:</td>
+                            <td>${p.list[i].path}</td>
+                        </tr>
+                        <tr>
+                            <td>type:</td>
+                            <td>${p.list[i].type}</td>
+                        </tr>
+                        <tr>
+                            <td>stat:</td>
+                            <td>${p.list[i].stat}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
     <!--@
     }
     -->
+    </li>
+</ul>
 </div>
 ${pagination(request, p.totalRow, p.totalPage, p.pageNumber, p.pageSize, 'page')}
 <!--@};-->
