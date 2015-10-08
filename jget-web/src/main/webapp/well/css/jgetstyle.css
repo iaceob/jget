@@ -109,22 +109,68 @@ body {
     margin: 0px auto;
 }
 
-/*表单*/
-.form-signin{
-    max-width: 330px;
-    padding: 15px;
-    margin: 0px auto;
-}
 
 .form-interval .input-group{
-    margin: 10px auto;
-}
-
-.form-signin button{
     margin: 10px auto;
 }
 
 .form-signin .message{
     text-align: right;
     margin: 10px auto;
+}
+
+
+
+/*任务列表*/
+.table{
+    line-height: 8px;
+    table-layout: fixed
+}
+.long-ovar{
+    white-space:nowrap;
+    text-overflow :ellipsis;
+    overflow:hidden;
+    height:inherit;
+}
+.long-ovar:active{
+    white-space:normal;
+    overflow:visible;
+
+    word-wrap: break-word;
+    word-break: normal;
+    height:inherit;
+}
+
+/*新建任务页面*/
+.btn-seat-box{
+    border-top-color: rgb(238, 238, 238);
+    border-top-style: solid;
+    border-top-width: 1px;
+    padding-top: 9px;
+    box-sizing: border-box;
+}
+.btn-seat{
+    float: right;
+}
+
+/*分页*/
+.page-box{
+    margin: 0px auto;
+    text-align: center;
+}
+
+div.pagination a,
+div.pagination span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857;
+    color: #337AB7;
+    text-decoration: none;
+    background-color: #FFF;
+    border: 1px solid #DDD;
+}
+div.pagination input {
+    height: 34px !important;
 }

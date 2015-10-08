@@ -31,31 +31,31 @@
 
 <!--@var container={-->
 <div>
-    <button type="button" data-toggle="modal" data-target="#newClient" class="btn btn-default">Create Client</button>
+    <button type="button" data-toggle="modal" data-target="#newClient" class="btn btn-default">创建下载机</button>
     <div id="newClient" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Create new Client</h4>
+                    <h4 class="modal-title">新的下载机</h4>
                 </div>
                 <div class="modal-body">
                     <form id="registercliform" autocomplete="off" class="form-interval">
                         <label for="name" hidden></label>
                         <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1" data-toggle="tooltip" data-placement="top" title="此项非常重要, 这个名称必须和下载终端中的 name 相同, 如果下载终端中没有配置 name 则默认提取下载终端的机器名称">Name</span>
-                            <input type="text" class="form-control" placeholder="client name" aria-describedby="basic-addon1" id="name" name="name">
+                            <span class="input-group-addon" id="basic-addon1" data-toggle="tooltip" data-placement="top" title="此项非常重要, 这个名称必须和下载终端中的 name 相同, 如果下载终端中没有配置 name 则默认提取下载终端的机器名称">名称</span>
+                            <input type="text" class="form-control" placeholder="下载机名" aria-describedby="basic-addon1" id="name" name="name">
                         </div>
                         <label for="ip" hidden></label>
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon2"  data-toggle="tooltip" data-placement="top" title="此项可不用更改, ip 会在下载机的心跳中进行更新">IP</span>
-                            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="ip" name="ip" value="0.0.0.0">
+                            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" id="ip" name="ip" value="0.0.0.0" readonly>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" id="saveClent" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" id="saveClent" class="btn btn-primary">创建</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -72,21 +72,14 @@
             <div class="panel-body">
                 <table class="table">
                     <tr>
-                        <td width="65px">id:</td>
-                        <td class="url-long">${clis[i].id}</td>
-                    </tr>
+                        <td>心跳时间:
+                        <td>${clis[i].heartbeat, dateFormat='yyyy-MM-dd HH:mm:ss'}
                     <tr>
-                        <td>heartbeat:</td>
-                        <td>${clis[i].heartbeat, dateFormat='yyyy-MM-dd HH:mm:ss'}</td>
-                    </tr>
+                        <td>过期:
+                        <td>${clis[i].expired ? '已过期' : '尚未过期'}
                     <tr>
-                        <td>expired:</td>
-                        <td>${clis[i].expired}</td>
-                    </tr>
-                    <tr>
-                        <td>ctime:</td>
-                        <td>${clis[i].ctime, dateFormat='yyyy-MM-dd HH:mm:ss'}</td>
-                    </tr>
+                        <td>创建时间:
+                        <td>${clis[i].ctime, dateFormat='yyyy-MM-dd HH:mm:ss'}
                 </table>
             </div>
         </div>

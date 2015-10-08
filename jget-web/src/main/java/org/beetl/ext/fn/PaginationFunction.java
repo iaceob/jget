@@ -91,7 +91,8 @@ public class PaginationFunction implements Function {
             String pageParam = objects.length>=6 ? objects[5].toString() : "page";
 
 
-            String url = request.getRequestURL().toString();
+            // String url = request.getRequestURL().toString();
+            String url = request.getContextPath() + request.getRequestURI();
             String getParam = request.getQueryString();
 
             return parsePage(totalRow, totalPage, pageNumber, pageSize, url, getParam, pageParam);

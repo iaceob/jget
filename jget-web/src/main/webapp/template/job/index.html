@@ -10,7 +10,7 @@
 
 <!--@var container={-->
 <div>
-    <button type="button" class="btn btn-default" onclick="window.location.href='${basePath}/job/create';">Create Job</button>
+    <a href="${basePath}/job/create" class="btn btn-default">创建任务</a>
 </div>
 <br/>
 <div>
@@ -23,26 +23,22 @@
                 <div class="panel-heading">${p.list[i].name}.${p.list[i].suffix}</div>
                 <div class="panel-body">
                     <table class="table">
+                        <tbody>
                         <tr>
-                            <td width="65px">url:</td>
-                            <td class="long-ovar">${p.list[i].url}</td>
-                        </tr>
+                            <td width="65px">链接:
+                            <td class="long-ovar">${p.list[i].url}
                         <tr>
-                            <td>cookie:</td>
-                            <td  class="long-ovar">${p.list[i].cookie}</td>
-                        </tr>
+                            <td>路径:
+                            <td>${p.list[i].path}
                         <tr>
-                            <td>path:</td>
-                            <td>${p.list[i].path}</td>
-                        </tr>
+                            <td>类型:
+                            <td>${p.list[i].type}
                         <tr>
-                            <td>type:</td>
-                            <td>${p.list[i].type}</td>
-                        </tr>
+                            <td>状态:
+                            <td>${p.list[i].stat}
                         <tr>
-                            <td>stat:</td>
-                            <td>${p.list[i].stat}</td>
-                        </tr>
+                            <td>cookie:
+                            <td  class="long-ovar">${p.list[i].cookie}
                     </table>
                 </div>
             </div>
@@ -52,25 +48,9 @@
     </li>
 </ul>
 </div>
-<nav class="page-box">
-    <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li>
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+
+${pagination(request, p.totalRow, p.totalPage, p.pageNumber, p.pageSize, 'page')}
+
 <!--@};-->
 
 <!--@include("/layout/layout_default.html", {title: title, header: header, container: container, footer: footer}){}-->

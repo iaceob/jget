@@ -43,24 +43,24 @@
 <!--@var container={-->
 
     <div class="panel panel-primary jget-panel panel-signin">
-        <div class="panel-heading">加入 JGET</div>
+        <div class="panel-heading">加入</div>
         <div class="panel-body">
             <form id="regform" class="form-interval form-signin">
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon3">Name</span>
-                    <input type="text" class="form-control" placeholder="User name" aria-describedby="basic-addon1" name="name">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-user"></i></span>
+                    <input type="text" class="form-control" placeholder="账户" aria-describedby="basic-addon1" name="name">
                 </div>
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon4">Mail</span>
-                    <input type="text" class="form-control" placeholder="Email addrees" aria-describedby="basic-addon1" name="email">
+                    <span class="input-group-addon" id="basic-addon4"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <input type="text" class="form-control" placeholder="邮箱" aria-describedby="basic-addon1" name="email">
                 </div>
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon5">Passwd</span>
-                    <input type="text" class="form-control" placeholder="User password" aria-describedby="basic-addon1"name="passwd">
+                    <span class="input-group-addon" id="basic-addon5"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input type="text" class="form-control" placeholder="密码" aria-describedby="basic-addon1"name="passwd">
                 </div>
-                <div class="btn-seat-box">
-                    <button class="btn btn-default" type="button" onclick="window.location.href='/account/signin'">登入</button>
-                    <button class="btn-seat btn btn-default">加入</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">加入</button>
+                <div class="message">
+                    <a href="${basePath}/account/signin">登入</a>
                 </div>
             </form>
         </div>
