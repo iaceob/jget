@@ -69,4 +69,4 @@ jget.thread.job.max_num = 8
 jget.download.path = ${user.home}/jgetdownload
 ```
 
-        
+> 线上程序部署: jget.iaceob.name
