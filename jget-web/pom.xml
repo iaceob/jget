@@ -5,7 +5,7 @@
     <parent>
         <artifactId>jget</artifactId>
         <groupId>name.iaceob</groupId>
-        <version>1.3-beta</version>
+        <version>1.5-beta</version>
     </parent>
     <packaging>war</packaging>
     <modelVersion>4.0.0</modelVersion>
